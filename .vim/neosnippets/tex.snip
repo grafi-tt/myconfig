@@ -1,0 +1,64 @@
+snippet doc
+    \documentclass[]{scrartcl}
+    \usepackage[${1}]{grafi-base}
+    \usepackage{grafi-commands}
+
+    \begin{document}
+
+    \title{${2}}
+    \author{${3}}
+    \date{${4}}
+    \maketitle{}
+
+    ${5:TARGET}
+
+    \end{document}
+
+snippet docja
+    \documentclass[11pt]{ltjsarticle}
+    \setmainjfont[
+        BoldFont={JJSYu Mincho Pr6N D},
+        ItalicFont={JJSYu Gothic Pr6N R},
+        BoldItalicFont={JJSYu Gothic Pr6N D}
+    ]{JJSYu Mincho Pr6N R}
+    \setsansjfont[
+        BoldFont={JJSYu Gothic Pr6N D},
+        ItalicFont={JJSYu Gothic Pr6N R},
+        BoldItalicFont={JJSYu Gothic Pr6N D}
+    ]{JJSYu Gothic Pr6N R}
+    \usepackage[${1}]{grafi-base}
+    \usepackage{grafi-commands}
+
+    \begin{document}
+
+    \title{${2}}
+    \author{${3}}
+    \date{${4}}
+    \maketitle{}
+
+    ${5:TARGET}
+
+    \end{document}
+
+snippet slide
+    \documentclass{beamer}
+    \mode<presentation>
+    \usepackage[${1}]{grafi-base}
+    \usepackage{grafi-commands}
+    \usepackage[]{grafi-beamer}
+
+    \begin{document}
+
+    \title[${2}]{${3}}
+    \author[${4}]{${5}}
+    \date{${6}}
+
+    {
+        \setbeamertemplate{footline}{}
+        \maketitle
+    }
+    \addtocounter{framenumber}{-1}
+
+    ${7:TARGET}
+
+    \end{document}

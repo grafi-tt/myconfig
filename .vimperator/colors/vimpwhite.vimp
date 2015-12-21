@@ -1,0 +1,32 @@
+" -- vimperator colorscheme --
+" name: vimpwhite
+" author: tlync<Takuya Fujimura>
+" tested: vimperator 3.0, firefox 4.0, mac osx 10.6
+" ----------------------------
+
+" Status Line
+hi StatusLine           color: #444; font-size: 14px;
+
+" Command Line
+hi ContentSeparator     border-top: 1px dotted #ccc;
+hi CmdLine              background: white; color: black; font-size: 14px
+hi PromptText           background: -moz-linear-gradient(top, #6BA7EF, #3163AA); color: white; 
+hi ModeMsg              background: -moz-linear-gradient(top, #6BA7EF, #3163AA); color: white;  padding: 0 7px; margin-right: 5px; vertical-align: middle;
+
+" Msg
+hi InfoMsg              color: magenta; background: transparent;
+
+" Comp
+hi CompTitle>* -append  border-bottom-color: #8C8C8C;
+hi CompResult -append   font-family: sans-serif !important;
+hi CompDesc -append     font-family: sans-serif; color: #666;
+hi Filter -append       border: none;
+hi CompTitle            -moz-appearance: statusbar; font-family: monospace; font-weight: bold; text-indent: 5px; height: 20px;
+hi Tag:not(:empty)      color: #355D93; background-color: #E6F2FC; border-radius: 2px; padding: 1px 2px; font-size: 10px;
+
+" Hint
+hi HintElem             background-color: #fffac6;
+hi Hint                 font-family: monospace; font-size: 11px; font-weight: bold; text-transform: uppercase; color: white; background-color: #4E85CC; padding: 1px 1px; border: 1px solid #3366AD;
+
+" for sbmcommentviewer.js
+style -name sbmcommentviewer chrome://* .liberator-sbmcommentsviewer-content { border-color: #ccc !important; }

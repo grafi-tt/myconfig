@@ -1,0 +1,136 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{grafi-beamer}
+
+\newif\ifgrafibeamer@theme
+\DeclareOption{theme}{\grafibeamer@themetrue}
+\DeclareOption{notheme}{\grafibeamer@themefalse}
+\ExecuteOptions{theme}
+
+\newif\ifgrafibeamer@commands
+\DeclareOption{commands}{\grafibeamer@commandstrue}
+\DeclareOption{nocommands}{\grafibeamer@commandsfalse}
+\ExecuteOptions{commands}
+
+\ProcessOptions\relax
+
+
+\ifgrafibeamer@theme
+  % styles
+  \usetheme{Boadilla}
+  \beamertemplatenavigationsymbolsempty
+
+  \setbeamertemplate{description item}{%
+    \insertdescriptionitem\hfill
+  }
+
+  % colors
+  \usecolortheme[named=purple]{structure}
+  \setbeamercolor{alerted text}{fg=orange!70!red}
+  \setbeamercolor{block title example}{bg=violet!25,fg=blue!20!violet!75!black}
+  \setbeamercolor{block body example}{bg=violet!10,fg=black}
+
+  \colorlet{myred}{red!80!black}
+  \colorlet{myblue}{blue!70!black}
+  \colorlet{mygreen}{green!70!blue!80!black}
+  \usebeamercolor{alerted text}
+  \colorlet{myalert}{fg}
+
+  % fonts
+  \usepackage{luatexja-fontspec}
+
+  \setsansjfont[
+    BoldFont={mplus-1p-bold},
+    ItalicFont={mplus-1p-regular},
+    BoldItalicFont={mplus-1p-bold}
+  ]{mplus-1p-regular}
+  \setmainjfont[
+    BoldFont={mplus-1p-bold},
+    ItalicFont={mplus-1p-regular},
+    BoldItalicFont={mplus-1p-bold}
+  ]{mplus-1p-regular}
+
+  %\usefonttheme[onlymath]{serif}
+  \boldmath
+\fi
+
+\ifgrafibeamer@commands
+  \usepackage{tikz}
+  \usetikzlibrary{arrows, shapes, positioning}
+
+  % http://tex.stackexchange.com/a/6155
+  \tikzset{onslide/.code args = {<#1>#2}{%
+    \only<#1>{\pgfkeysalso{#2}}
+  }}
+  \tikzset{temporal/.code args = {<#1>#2#3#4}{%
+    \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}}
+  }}
+
+  % inlined nodes and references (TODO: improve those)
+  \tikzset{inline/.style = {remember picture, anchor=base, inner sep=0mm, outer sep=0mm}}
+  \newcommand{\inline}[3][]{\tikz[baseline=(#2.base)]{\node[inline,#1](#2){#3};}}
+
+  \tikzset{mycallout/.style = {remember picture, draw, fill=white, rectangle callout, rounded corners=2pt}}
+
+  %http://tex.stackexchange.com/a/45005
+  \newenvironment{noheader}{
+    \setbeamertemplate{headline}[default]
+    \def\beamer@entrycode{\vspace*{-\headheight}}
+  }{}
+
+  % 卒論発表前日に書いたアレ
+  \newcommand{\tartantemplate}[1][0.8\paperwidth]{%
+    \newcommand{\checkdraw}[3][]{%
+      \draw[##1, step=##2, xshift=+##3, yshift=+##3] (p1) grid (p2);
+      \draw[##1, step=##2, xshift=-##3, yshift=+##3] (p1) grid (p2);
+      \draw[##1, step=##2, xshift=+##3, yshift=-##3] (p1) grid (p2);
+      \draw[##1, step=##2, xshift=-##3, yshift=-##3] (p1) grid (p2);
+    }%
+    \usetikzlibrary{calc, decorations.fractals, shadows.blur}%
+    %
+    \setbeamertemplate{background canvas}{%
+      \begin{tikzpicture}[overlay, remember picture, shift=(current page.center), decoration=Koch snowflake]
+        % tartan check
+        \begin{scope}[rotate=45]
+          \coordinate (p1) at (-\paperwidth, -\paperwidth);
+          \coordinate (p2) at ( \paperwidth,  \paperwidth);
+
+          \fill [red!80!black] (p1) rectangle (p2);
+
+          \checkdraw[orange, opacity=0.8, thick]{1cm}{0mm};
+          \checkdraw[orange!60, opacity=0.8, very thin]{1cm}{0mm};
+          \checkdraw[white, opacity=0.5, very thin]{1cm}{0.9mm};
+          \checkdraw[white, opacity=0.5, very thin]{1cm}{1.1mm};
+
+          \checkdraw[black, opacity=0.3, very thin]{1cm}{1.75mm}
+          \checkdraw[black, opacity=0.5, ultra thin]{1cm}{1.875mm}
+          \checkdraw[black, opacity=0.5, very thin]{1cm}{2mm}
+          \checkdraw[black, opacity=0.5, ultra thin]{1cm}{2.125mm}
+          \checkdraw[black, opacity=0.3, very thin]{1cm}{2.25mm}
+          \checkdraw[black, opacity=0.5, ultra thin]{1cm}{2.375mm}
+          \checkdraw[black, opacity=0.5, very thin]{1cm}{2.5mm}
+          \checkdraw[black, opacity=0.5, ultra thin]{1cm}{2.625mm}
+          \checkdraw[black, opacity=0.3, very thin]{1cm}{2.75mm}
+
+          \checkdraw[white, opacity=0.3, semithick]{2cm}{5mm}
+        \end{scope}
+
+        % white lace
+        \begin{scope}
+          \edef\lacewidth{0.5*#1}
+          \edef\lacecount{16}
+
+          \xdef\grafibeamer@lace{(\lacewidth, \paperheight) --}
+          \foreach \i in {1, ..., \lacecount} {
+            \xdef\grafibeamer@lace{\grafibeamer@lace ($(\lacewidth, \paperheight-2*\paperheight*\i/\lacecount)$) --}
+          }
+          \xdef\grafibeamer@lace{\grafibeamer@lace (-\lacewidth, -\paperwidth) --}
+          \foreach \i in {1, ..., \lacecount} {
+            \xdef\grafibeamer@lace{\grafibeamer@lace ($(-\lacewidth, 2*\paperheight*\i/\lacecount-\paperheight)$) --}
+          }
+          \fill [fill=white, blur shadow={shadow blur steps=5}]
+            decorate{decorate{decorate{\grafibeamer@lace cycle}}};
+        \end{scope}
+      \end{tikzpicture}%
+    }%
+  }
+\fi

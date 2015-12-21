@@ -1,0 +1,97 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{grafi-base}
+
+\newif\ifgrafibase@math
+\DeclareOption{math}{\grafibase@mathtrue}
+\DeclareOption{nomath}{\grafibase@mathfalse}
+\ExecuteOptions{math}
+
+\newif\ifgrafibase@symb
+\DeclareOption{symb}{\grafibase@symbtrue}
+\DeclareOption{nosymb}{\grafibase@symbfalse}
+\ExecuteOptions{symb}
+
+\newif\ifgrafibase@url
+\DeclareOption{url}{\grafibase@urltrue}
+\DeclareOption{nourl}{\grafibase@urlfalse}
+\ExecuteOptions{url}
+
+\newif\ifgrafibase@thm
+\DeclareOption{thm}{\grafibase@thmtrue}
+\DeclareOption{nothm}{\grafibase@thmfalse}
+\ExecuteOptions{thm}
+
+\newif\ifgrafibase@algo
+\DeclareOption{algo}{\grafibase@algotrue}
+\DeclareOption{noalgo}{\grafibase@algofalse}
+\ExecuteOptions{noalgo}
+
+\newif\ifgrafibase@proof
+\DeclareOption{proof}{\grafibase@prooftrue}
+\DeclareOption{noproof}{\grafibase@prooffalse}
+\ExecuteOptions{noproof}
+
+\newif\ifgrafibase@tikz
+\DeclareOption{tikz}{\grafibase@tikztrue}
+\DeclareOption{notikz}{\grafibase@tikzfalse}
+\ExecuteOptions{notikz}
+
+\ProcessOptions\relax
+
+
+\ifgrafibase@math
+  \RequirePackage{amsmath}
+  \RequirePackage{array}
+  \RequirePackage{mathtools}
+  \RequirePackage{amsfonts}
+\fi
+
+\ifgrafibase@symb
+  \RequirePackage{bm}
+  \RequirePackage{amssymb}
+  \RequirePackage{wasysym}
+  \RequirePackage{stmaryrd}
+\fi
+
+\ifgrafibase@url
+  \RequirePackage{url}
+  \def\UrlFont{\fontfamily{lmvtt}\selectfont}
+\fi
+
+\ifgrafibase@thm
+  \RequirePackage{amsthm}
+
+  \theoremstyle{definition}
+  \newtheorem{definition}{Definition}[section]
+
+  \theoremstyle{plain}
+  \newtheorem{theorem}[definition]{Theorem}
+  \newtheorem{lemma}[definition]{Lemma}
+  \newtheorem{proposition}[definition]{Proposition}
+  \newtheorem{corollary}[definition]{Corollary}
+  \newtheorem{conjecture}[definition]{Conjecture}
+
+  \theoremstyle{definition}
+  \newtheorem{notation}[definition]{Notation}
+  \newtheorem{example}[definition]{Example}
+  \newtheorem{remark}[definition]{Remark}
+  \newtheorem{assumption}[definition]{Assumption}
+\fi
+
+\ifgrafibase@algo
+  \RequirePackage{algorithm}
+  \RequirePackage{algpseudocode}
+\fi
+
+\ifgrafibase@proof
+  \RequirePackage{proof}
+\fi
+
+\ifgrafibase@tikz
+  \RequirePackage{tikz}
+  \RequirePackage{tikz-cd}
+  \usetikzlibrary{arrows, shapes, automata, positioning}
+
+  \tikzset{autom/.style = {->, >=stealth'}}
+  \tikzset{every state/.style = {circle, minimum size=5mm, inner sep=0mm}}
+\fi

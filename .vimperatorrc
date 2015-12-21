@@ -1,0 +1,65 @@
+" 3.3
+
+" load hatena bookmark extention
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
+
+" hide scrollbar
+set noscrollbars
+" setting toolbars none makes only statusbar shown, while I'm not sure the reason of the behavior
+set toolbars=none,tabs
+" smart completion of location bar and Hatebu
+set complete=l
+autocmd VimperatorEnter .* :set complete+=H
+" alphabet hints
+set hintchars=cfjklasdhguionmerw
+" automatically deactivate ime in command mode
+style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
+" disable bell
+set visualbell
+
+" browsing in a tab
+nnoremap <C-n> j
+nnoremap <C-p> k
+nnoremap gf ]f
+nnoremap gF [f
+nnoremap e f
+
+" moving tab
+nnoremap b <C-p>
+nnoremap f <C-n>
+" nnoremap d :tabc -select lastactive<CR>
+
+nnoremap gt :<Nop>
+nnoremap gT :<Nop>
+
+" UI control
+nnoremap D :dialog<Space>
+nnoremap B :buffer<Space>
+
+" page navigation
+nnoremap vu gu
+nnoremap vU gU
+nnoremap vp [[
+nnoremap vn [[
+nnoremap vs gf
+nnoremap vi :dialog pageinfo<CR>
+
+" yank
+nnoremap yy :copy URL<CR>
+nnoremap ya :copy anchor<CR>
+nnoremap yp :copy titleAndURL<CR>
+noremap yt :copy title<CR>
+nnoremap ys :copy selanchor<CR>
+nnoremap yq :copy htmlblockquote<CR>
+
+" bookmarklet
+let g:command_bookmarklet_prefix = ""
+
+" extended pageinfo
+"autocmd VimperatorEnter ".*" :highlight StatusLineSecure -append font-size: 14px;
+"autocmd VimperatorEnter ".*" :highlight StatusLineWeak -append font-size: 14px;
+"autocmd VimperatorEnter ".*" :highlight StatusLineExtended -append font-size: 14px;
+
+colorscheme vimpwhite
+
+" vim: set ft=vimperator:

@@ -1,0 +1,66 @@
+((("anything" .
+   [1 0 0 0 0 0 0 0])
+  ("nil" .
+   [1 0 0])
+  ("twittering-auth-method" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("setq" .
+   [1 0 0 0])
+  ("skk-aux-large-jisyo" .
+   [1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-jisyo" .
+   [1 0 0 0 0 0 1 0 1])
+  ("skk-initial-search-jisyo" .
+   [1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-kakutei-jisyo" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-large-jisyo" .
+   [2 0 0 0 0 0 2 0 0 0 0 0 0 0 0])
+  ("skk-search-jisyo-file" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-search-kakutei-jisyo-file" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-search-server" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("skk-search-prog-list" .
+   [0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("margin-right" .
+   [0 0 0 0 0 0 0 0 0 1 0 0])
+  ("margin-left" .
+   [1 0 0 0 0 0 0 0 0 0 0])
+  ("border-bottom" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0])
+  ("auto" .
+   [1 0 0 0])
+  ("margin" .
+   [1 0 0 0 0 0])
+  ("padding" .
+   [1 0 0 0 0 0 0])
+  ("border" .
+   [1 0 0 0 0 0])
+  ("default" .
+   [1 0 0 0 0 1 0])
+  ("important" .
+   [0 0 0 2 0 2 0 1 0])
+  ("none" .
+   [5 0 0 0])
+  ("2em" .
+   [1 0 0])
+  ("border-left" .
+   [2 0 0 0 0 0 0 0 0 0 0])
+  ("FFF" .
+   [2 0 0])
+  ("border-right" .
+   [1 0 0 0 0 0 0 0 0 0 0 1])
+  ("1em" .
+   [2 0 0])
+  ("height" .
+   [2 0 0 0 0 0])
+  ("50%" .
+   [1 0 1])
+  ("width" .
+   [2 0 0 0 0])
+  ("20%" .
+   [1 0 0])
+  ("border-top" .
+   [2 0 0 0 0 0 0 0 0 0])))

@@ -1,0 +1,204 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{grafi-commands}
+
+\newif\ifgraficommands@util
+\DeclareOption{util}{\graficommands@utiltrue}
+\DeclareOption{noutil}{\graficommands@utilfalse}
+\ExecuteOptions{util}
+
+\newif\ifgraficommands@arr
+\DeclareOption{arr}{\graficommands@arrtrue}
+\DeclareOption{noarr}{\graficommands@arrfalse}
+\ExecuteOptions{arr}
+
+\newif\ifgraficommands@catth
+\DeclareOption{catth}{\graficommands@catthtrue}
+\DeclareOption{nocatth}{\graficommands@catthfalse}
+\ExecuteOptions{catth}
+
+\newif\ifgraficommands@cats
+\DeclareOption{cats}{\graficommands@catstrue}
+\DeclareOption{nocats}{\graficommands@catsfalse}
+\ExecuteOptions{cats}
+
+\newif\ifgraficommands@functs
+\DeclareOption{functs}{\graficommands@functstrue}
+\DeclareOption{nofuncts}{\graficommands@functsfalse}
+\ExecuteOptions{functs}
+
+\newif\ifgraficommands@logic
+\DeclareOption{logic}{\graficommands@logictrue}
+\DeclareOption{nologic}{\graficommands@logicfalse}
+\ExecuteOptions{logic}
+
+\newif\ifgraficommands@lang
+\DeclareOption{lang}{\graficommands@langtrue}
+\DeclareOption{nolang}{\graficommands@langfalse}
+\ExecuteOptions{lang}
+
+\newif\ifgraficommands@sets
+\DeclareOption{sets}{\graficommands@setstrue}
+\DeclareOption{nosets}{\graficommands@setsfalse}
+\ExecuteOptions{sets}
+
+\newif\ifgraficommands@complexity
+\DeclareOption{complexity}{\graficommands@complexitytrue}
+\DeclareOption{nocomplexity}{\graficommands@complexityfalse}
+\ExecuteOptions{complexity}
+
+\newif\ifgraficommands@colon
+\DeclareOption{colon}{\graficommands@colontrue}
+\DeclareOption{nocolon}{\graficommands@colonfalse}
+\ExecuteOptions{nocolon}
+
+\newif\ifgraficommands@angle
+\DeclareOption{angle}{\graficommands@angletrue}
+\DeclareOption{noangle}{\graficommands@anglefalse}
+\ExecuteOptions{noangle}
+
+\ProcessOptions\relax
+
+
+% utilities
+\ifgraficommands@util
+  \newcommand{\pseudorel}[1]{\mathrel{}#1\mathrel{}}
+
+  \newcommand{\caseif}[1]{\text{if}\enspace#1}
+  \newcommand{\otherwise}{\text{otherwise}}
+\fi
+
+% arrows
+\ifgraficommands@arr
+  \newcommand{\from}{\leftarrow}
+  \newcommand{\From}{\Leftarrow}
+  \newcommand{\To}{\Rightarrow}
+\fi
+
+% category theory
+\ifgraficommands@catth
+  \newcommand{\co}{\mathbin{\circ}}
+  \newcommand{\vco}{\mathbin{\bullet}}
+  \newcommand{\kco}{\mathbin{\odot}}
+
+  \newcommand{\after}{\mathrel{\circ}}
+  \newcommand{\vafter}{\mathrel{\bullet}}
+  \newcommand{\kafter}{\mathrel{\odot}}
+
+  \newcommand{\id}{\mathrm{id}}
+  \newcommand{\holder}{\mathord-}
+
+  %\newcommand{\lim}{\operatorname{lim}}
+  \newcommand{\colim}{\operatorname{colim}}
+  \newcommand{\Hom}{\operatorname{Hom}}
+\fi
+
+% categories
+\ifgraficommands@cats
+  \newcommand{\Cat}{\mathbf{Cat}}
+  \newcommand{\Sets}{\mathbf{Sets}}
+  \newcommand{\Rel}{\mathbf{Rel}}
+  \newcommand{\Poset}{\mathbf{Poset}}
+  \newcommand{\Meas}{\mathbf{Meas}}
+  \newcommand{\BA}{\mathbf{BA}}
+  \newcommand{\Nat}{\mathbf{Nat}}
+  \newcommand{\Grp}{\mathbf{Grp}}
+  \newcommand{\Mon}{\mathbf{Mon}}
+
+  \newcommand{\Alg}{\mathbf{Alg}}
+  \newcommand{\Coalg}{\mathbf{Coalg}}
+  \newcommand{\Kl}[1]{\mathcal{K}\hspace{-.1em}\ell(#1)}
+  \newcommand{\EM}[1]{\mathcal{E}\hspace{-.32em}\mathcal{M}(#1)}
+
+  \newcommand{\CatA}{\mathbb{A}}
+  \newcommand{\CatB}{\mathbb{B}}
+  \newcommand{\CatC}{\mathbb{C}}
+  \newcommand{\CatD}{\mathbb{D}}
+  \newcommand{\CatE}{\mathbb{E}}
+\fi
+
+% functors, monads
+\ifgraficommands@functs
+  \newcommand{\pow}{\mathcal{P}}
+  \newcommand{\fpow}{\mathcal{P}_{\omega}}
+  \newcommand{\upcls}{\mathcal{U\hspace{-.21em}P}}
+  \newcommand{\dist}{\mathcal{D}}
+  \newcommand{\lift}{\mathcal{L}}
+  \newcommand{\giry}{\mathcal{G}}
+\fi
+
+% logic, lambda
+\ifgraficommands@logic
+  \newcommand{\biglor}{\bigvee}
+  \newcommand{\bigland}{\bigwedge}
+
+  \newcommand{\btt}{\mathtt{t\hspace{-.2em}t}}
+  \newcommand{\bff}{\mathtt{f\hspace{-.2em}f}}
+  \newcommand{\sem}[1]{\llbracket#1\rrbracket}
+  \newcommand{\Var}{\mathit{\hspace{-.2em}V\hspace{-.32em}ar}}
+
+  \newcommand{\quant}[2]{#1#2\mathpunct{.}}
+  \newcommand{\qnt}{\quant}
+  \newcommand{\qnta}{\qnt{\forall}}
+  \newcommand{\qnte}{\qnt{\exists}}
+  \newcommand{\qntu}{\qnt{\exists!}}
+  \newcommand{\qntl}{\qnt{\lambda}}
+  \newcommand{\qntL}{\qnt{\Lambda}}
+  \newcommand{\qntm}{\qnt{\mu}}
+  \newcommand{\qntn}{\qnt{\nu}}
+\fi
+
+% language, automata, modal logic, game
+\ifgraficommands@lang
+  \newcommand{\astr}{\mathord{*}}
+  \newcommand{\ltrmodal}[1]{\langle#1\rangle}
+  \newcommand{\AP}{\mathrm{A\hspace{-.2em}P}}
+  \newcommand{\Dia}{\Diamond}
+  \newcommand{\Pla}{\Diamond}
+  \newcommand{\Opp}{\Box}
+\fi
+
+% sets
+\ifgraficommands@sets
+  \newcommand{\nat}{\mathbb{N}}
+  \newcommand{\integer}{\mathbb{Z}}
+  \newcommand{\rational}{\mathbb{Q}}
+  \newcommand{\real}{\mathbb{R}}
+\fi
+
+% complexity
+\ifgraficommands@complexity
+  \newcommand{\complexity}[1]{\textsf{#1}}
+  \newcommand{\LOGSPACE}{\complexity{LOGSPACE}}
+  \newcommand{\Poly}{\complexity{P}}
+  \newcommand{\NP}{\complexity{NP}}
+  \newcommand{\coNP}{\complexity{co-NP}}
+  \newcommand{\UP}{\complexity{UP}}
+  \newcommand{\coUP}{\complexity{co-UP}}
+  \newcommand{\PSPACE}{\complexity{PSPACE}}
+  \newcommand{\EXPTIME}{\complexity{EXPSPACE}}
+  \newcommand{\EXPSPACE}{\complexity{EXPSPACE}}
+\fi
+
+% The following conflicts with \mathtoolsset{centercolon}.
+% But \vcentcolon, and commands using that e.g. \coloneqq are OK.
+\ifgraficommands@colon
+  % pre-load amsmath to surely override amsmath's \colon
+  \RequirePackage{amsmath}%
+  % backup the ordinary colon, which is also used by mathtool's \vcentcolon
+  \mathchardef\ordinarycolon=\mathcode`\:
+  % make ':' math-active and redefine it to be amsmath's \colon
+  \begingroup\lccode`~=`:
+  \lowercase{\endgroup\def~{%copied from amsmath
+    \nobreak\mskip2mu\mathpunct{}\nonscript
+    \mkern-\thinmuskip{\ordinarycolon}\mskip6muplus1mu\relax}}%
+  \mathcode`\:="8000
+  % let \colon be the ordinary colon
+  \let\colon\ordinarycolon
+\fi
+
+\ifgraficommands@angle
+  \mathcode`\<="4268%left delimiter
+  \mathcode`\>="5269%right delimiter
+  \mathchardef\gt="313E%relation >
+  \mathchardef\lt="313C%relation <
+\fi

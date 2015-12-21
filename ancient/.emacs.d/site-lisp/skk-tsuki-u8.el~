@@ -1,0 +1,169 @@
+;; -*- coding: iso-2022-jp -*-
+;; SKK で月配列U8を使う。
+;; [YK] massangeana氏の花配列のEmacs Lispを月配列用に改変。
+;;      (see http://www.massangeana.com/mas/charsets/hana/hanasetup.htm#skk)
+;;      コメント中の [YK] は改変者による付記を表す。
+;;
+
+(when (not (boundp 'skk-hana-ansi)) (setq skk-hana-ansi nil))
+
+(require 'skk-kanagaki-util)
+
+(setq skk-special-midashi-char-list '(?< ?>)) ; "?" を除く。
+
+;; skk-auto-start-henkan-keyword-list はそのままでよい。
+
+(if (not skk-hana-ansi)
+    (progn
+      ;; lq,.@ は除く。[YK] 花でのQの役割をTにあてる。月では '?' は除外
+      (setq skk-set-henkan-point-key 
+            '(?A ?B ?C ?D ?E ?F ?G ?H ?I ?J ?K ?M ?N ?O ?P ?Q ?R ?S ?U ?V ?W ?X ?Y ?Z
+                 ?+ ?* ?_ ?| ?`))
+      ;; 106 キー用の大文字・小文字変換テーブル。
+      (setq skk-downcase-alist 
+            '((?? . ?/) (?* . ?:) (?_ . ?\\) (?| . ?\\) (?+ . ?\;) (?` . ?@)))
+      )
+  (progn
+    (setq skk-set-henkan-point-key 
+          '(?A ?B ?C ?D ?E ?F ?G ?H ?I ?J ?K ?M ?N ?O ?P ?Q ?R ?S ?U ?V ?W ?X ?Y ?Z
+               ?: ?\" ?| ?{))
+    (setq skk-downcase-alist 
+          '((?? . ?/) (?\" . ?') (?| . ?\\) (?: . ?\;) (?{ . ?[)))
+    ))
+
+;; `-' で前候補を表示。
+(setq skk-previous-candidate-char ?-)
+
+(setq skk-process-okuri-early nil)	; ローマ字変換の時以外は意味なし。
+
+
+;; copied from skk-kanagaki.el
+
+(defun skk-kanagaki-set-okurigana (&optional no-sokuon)
+  "ポイントの直前の文字を送り仮名と見倣して、変換を開始する。
+ただし、 もうひとつ前の文字が促音だった場合には、 それ以降を送り仮名と見倣す。"
+  (interactive)
+  (let ((pt1 (point))
+	pt2 okuri sokuon)
+    (setq okuri
+	  (skk-save-point
+	    ;; うう、こんなことをしなければならないのか...
+	    (backward-char 1)
+	    (buffer-substring-no-properties
+	     (setq pt2 (point))
+	     pt1)))
+    (when okuri
+      (unless no-sokuon
+	(setq sokuon
+	      (skk-save-point
+		(backward-char 2)
+		(buffer-substring-no-properties
+		 (point)
+		 pt2)))
+	(unless (member sokuon '("っ" "ッ"))
+	  (setq sokuon nil)))
+      ;;
+      (skk-save-point
+	(backward-char (if sokuon 2 1))
+	(skk-set-marker skk-okurigana-start-point
+			(point)))
+      (setq skk-okuri-char (skk-okurigana-prefix okuri))
+      (unless skk-current-search-prog-list
+	(setq skk-current-search-prog-list
+	      skk-search-prog-list))
+      (skk-set-okurigana))))
+;; end copy
+
+
+
+(setq skk-rom-kana-rule-list nil)
+
+
+(setq skk-rom-kana-base-rule-list-jis
+      '(
+	(":" nil ("チ" . "ち"))   ("k:" nil "・")   ("l:" nil ("ヂ" . "ぢ"))
+
+	("@" nil skk-toggle-kana)
+	("`" nil skk-latin-mode)
+	("{" nil skk-jisx0208-latin-mode)
+
+	("]" nil skk-purge-from-jisyo)
+      ))
+
+(setq skk-rom-kana-base-rule-list-ansi
+      '(
+	("'" nil ("チ" . "ち"))   ("k'" nil "・")   ("l'" nil ("ヂ" . "ぢ"))
+
+	("[" nil skk-toggle-kana)
+	("{" nil skk-latin-mode)
+	("} nil skk-jisx0208-latin-mode)
+
+	("`" nil skk-purge-from-jisyo)
+	("@" nil skk-today)
+      ))
+
+(setq skk-rom-kana-base-rule-list-all
+      '(
+	("/" nil skk-abbrev-mode)
+	("?" nil skk-today)  ;; [YK] もと "`"
+    ("\n" nil skk-kakutei)
+	("T" nil skk-set-henkan-point-subr)  ;; [YK] 花では Q
+	("$" nil skk-display-code-for-char-at-point)
+	("d\\" nil skk-input-by-code-or-menu)
+
+	("q" nil ("リ" . "り"))   ("kq" nil ("ァ" . "ぁ"))   ("lq" nil "！")
+	("w" nil ("コ" . "こ"))   ("kw" nil ("ヒ" . "ひ"))   ("lw" nil ("ゴ" . "ご"))
+	("e" nil ("シ" . "し"))   ("ke" nil ("ホ" . "ほ"))   ("le" nil ("ジ" . "じ"))
+	("r" nil ("テ" . "て"))   ("kr" nil ("フ" . "ふ"))   ("lr" nil ("デ" . "で"))
+	("t" nil ("ョ" . "ょ"))   ("kt" nil ("メ" . "め"))
+	("y" nil ("ツ" . "つ"))   ("dy" nil ("ヌ" . "ぬ"))   ("sy" nil ("ヅ" . "づ"))
+	("u" nil ("ン" . "ん"))   ("du" nil ("エ" . "え"))   ("su" nil ("ピ" . "ぴ"))
+	("i" nil ("イ" . "い"))   ("di" nil ("ミ" . "み"))   ("si" nil ("ポ" . "ぽ"))
+	("o" nil ("カ" . "か"))   ("do" nil ("ヤ" . "や"))   ("so" nil ("ガ" . "が"))
+	("p" nil ("ソ" . "そ"))   ("dp" nil ("ェ" . "ぇ"))   ("sp" nil ("？" . "？"))
+
+	("a" nil ("ハ" . "は"))   ("ka" nil ("ィ" . "ぃ"))   ("la" nil ("バ" . "ば"))
+	("s" nil ("カ" . "か"))   ("ks" nil ("ヨ" . "よ"))   ("ls" nil ("パ" . "ぱ"))
+	                          ("kd" nil ("ケ" . "け"))   ("ld" nil ("ゲ" . "げ"))
+	("f" nil ("ト" . "と"))   ("kf" nil ("ア" . "あ"))   ("lf" nil ("ド" . "ど"))
+	("g" nil ("タ" . "た"))   ("kg" nil ("レ" . "れ"))   ("lg" nil ("ダ" . "だ"))
+	("h" nil ("ク" . "く"))   ("dh" nil ("マ" . "ま"))   ("sh" nil ("グ" . "ぐ"))
+	("j" nil ("ウ" . "う"))   ("dj" nil ("オ" . "お"))   ("sj" nil ("ヴ" . "う゛"))
+	                          ("dk" nil ("モ" . "も"))   ("sk" nil ("ボ" . "ぼ"))
+	                          ("dl" nil ("ワ" . "わ"))   ("sl" nil ("ゾ" . "ぞ"))
+	(";" nil ("キ" . "き"))   ("d;" nil ("ォ" . "ぉ"))   ("s;" nil ("ギ" . "ぎ"))
+
+	("z" nil ("ス" . "す"))   ("kz" nil ("ゥ" . "ぅ"))   ("lz" nil ("ズ" . "ず"))
+	("x" nil ("ケ" . "け"))   ("kx" nil ("ヘ" . "へ"))   ("lx" nil "「")
+	("c" nil ("ニ" . "に"))   ("kc" nil ("セ" . "せ"))   ("lc" nil ("ゼ" . "ぜ"))
+	("v" nil ("ナ" . "な"))   ("kv" nil ("ュ" . "ゅ"))   ("lv" nil "」")
+	("b" nil ("サ" . "さ"))   ("kb" nil ("ユ" . "ゆ"))   ("lb" nil ("ザ" . "ざ"))
+	("n" nil ("ッ" . "っ"))   ("dn" nil ("ヒ" . "ひ"))   ("sn" nil ("ビ" . "び"))
+	("m" nil ("ル" . "る"))   ("dm" nil ("ワ" . "わ"))   ("sm" nil ("プ" . "ぷ"))
+	("," nil ("ノ" . "の"))   ("d," nil ("フ" . "ふ"))   ("s," nil ("ブ" . "ぶ"))
+	("." nil ("モ" . "も"))   ("d." nil ("ヘ" . "へ"))   ("s." nil ("ペ" . "ぺ"))
+	                          ("d/" nil ("ロ" . "ろ"))   ("d/" nil ("べ" . "べ"))
+
+	("ssm" nil ("ヮ" . "ゎ")) ; [YK] "ddl" が "→" と衝突するため。要検討
+	("ssi" nil ("ヰ" . "ゐ"))
+	("sse" nil ("ヱ" . "ゑ"))
+	("sso" nil "ヵ")
+	("ssd" nil "ヶ")
+	("ddh" nil "←")
+	("ddj" nil "↓")
+	("ddk" nil "↑")
+	("ddl" nil "→")
+	("dd," nil "‥")
+	("dd." nil "…")
+	("dd-" nil "〜")
+	("llx" nil "『")
+	("llv" nil "』")
+	("df" nil skk-current-touten)
+	("kj" nil skk-current-kuten)
+	))
+
+
+(setq skk-rom-kana-base-rule-list
+      (append 
+       (if (not skk-hana-ansi) skk-rom-kana-base-rule-list-jis skk-rom-kana-base-rule-list-ansi)
+       skk-rom-kana-base-rule-list-all))

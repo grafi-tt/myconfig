@@ -1,0 +1,18 @@
+div#header {
+    text-align: center;
+}
+#header h1 {
+    margin-top: 15%;
+}
+body {
+    font-family: sans;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #BB3333;
+    font-weight: normal;
+}
+#author {
+    font-weight: normal;
+    color: black;
+}
