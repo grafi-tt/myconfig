@@ -1,3 +1,5 @@
 .netrwhist
 spell
 vim-filetype-haskell
+bundle/*
+!bundle/.keep
