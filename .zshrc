@@ -21,8 +21,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 ## glob
 # Append a trailing `/' to all directory names resulting from filename generation (globbing).
 setopt mark_dirs
-# If a pattern for filename generation has no matches, delete the pattern from the argument list instead of reporting an error. 
-setopt null_glob
 # Treat the `#', `~' and `^' characters as part of patterns for filename generation, etc.  (An initial unquoted `~' always produces named directory expansion.)
 # Disabled, sicne it is inconvinient with git.
 #setopt extended_glob
