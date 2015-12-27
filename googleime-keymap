@@ -1,0 +1,93 @@
+status	key	command
+Composition	F13	CancelAndIMEOff
+Composition	Ctrl [	Cancel
+Composition	Ctrl ;	ConvertToHalfAlphanumeric
+Composition	Ctrl g	Delete
+Composition	Ctrl h	Backspace
+Composition	Ctrl i	ConvertToFullKatakana
+Composition	Ctrl k	MoveCursorLeft
+Composition	Ctrl l	MoveCursorRight
+Composition	Ctrl Left	MoveCursorToBeginning
+Composition	Ctrl m	Commit
+Composition	Ctrl n	Commit
+Composition	Ctrl o	ConvertToHalfWidth
+Composition	Ctrl p	ConvertToFullAlphanumeric
+Composition	Ctrl Right	MoveCursorToEnd
+Composition	Ctrl u	ConvertToHiragana
+Composition	F2	ConvertWithoutHistory
+Composition	F6	ConvertToHiragana
+Composition	F7	ConvertToFullKatakana
+Composition	F8	ConvertToHalfWidth
+Composition	F9	ConvertToFullAlphanumeric
+Composition	F10	ConvertToHalfAlphanumeric
+Composition	Backspace	Backspace
+Composition	Delete	Delete
+Composition	Enter	Commit
+Composition	ESC	Cancel
+Composition	Space	Convert
+Composition	Tab	PredictAndConvert
+Composition	Left	MoveCursorLeft
+Composition	Right	MoveCursorRight
+Conversion	F13	CancelAndIMEOff
+Conversion	Ctrl [	Cancel
+Conversion	Ctrl ;	ConvertToHalfAlphanumeric
+Conversion	Ctrl h	Cancel
+Conversion	Ctrl i	ConvertToFullKatakana
+Conversion	Ctrl k	SegmentWidthShrink
+Conversion	Ctrl l	SegmentWidthExpand
+Conversion	Ctrl Left	SegmentFocusFirst
+Conversion	Ctrl m	Commit
+Conversion	Ctrl n	CommitOnlyFirstSegment
+Conversion	Ctrl o	ConvertToHalfWidth
+Conversion	Ctrl p	ConvertToFullAlphanumeric
+Conversion	Ctrl Right	SegmentFocusLast
+Conversion	Ctrl Shift Left	SegmentWidthShrink
+Conversion	Ctrl Shift Right	SegmentWidthExpand
+Conversion	Ctrl u	ConvertToHiragana
+Conversion	F10	ConvertToHalfAlphanumeric
+Conversion	F6	ConvertToHiragana
+Conversion	F7	ConvertToFullKatakana
+Conversion	F8	ConvertToHalfWidth
+Conversion	F9	ConvertToFullAlphanumeric
+Conversion	Backspace	Cancel
+Conversion	Enter	Commit
+Conversion	ESC	Cancel
+Conversion	Space	ConvertNext
+Conversion	Shift Space	ConvertPrev
+Conversion	Tab	ConvertNextPage
+Conversion	Shift Tab	ConvertPrevPage
+Conversion	Left	SegmentWidthShrink
+Conversion	Right	SegmentWidthExpand
+Conversion	Shift Left	SegmentFocusLeft
+Conversion	Shift Right	SegmentFocusRight
+Conversion	Up	ConvertPrev
+Conversion	Down	ConvertNext
+DirectInput	F14	IMEOn
+Precomposition	F13	CancelAndIMEOff
+Precomposition	F10	ToggleAlphanumericMode
+Precomposition	Ctrl F7	LaunchWordRegisterDialog
+Precomposition	Ctrl F12	LaunchConfigDialog
+Precomposition	Backspace	Revert
+Precomposition	Ctrl Backspace	Undo
+Precomposition	Shift Space	InsertAlternateSpace
+Precomposition	Space	InsertSpace
+Prediction	Down	ConvertNext
+Prediction	Up	ConvertPrev
+Prediction	Ctrl Delete	DeleteSelectedCandidate
+Suggestion	Ctrl Down	PredictAndConvert
+Suggestion	Ctrl Enter	CommitFirstSuggestion
+Suggestion	Down	PredictAndConvert
+Suggestion	Shift Enter	CommitFirstSuggestion
+Prediction	Tab	ConvertNextPage
+Prediction	Shift Tab	ConvertPrevPage
+Composition	Kanji	CancelAndIMEOff
+Composition	OFF	CancelAndIMEOff
+Composition	ON	IMEOn
+Conversion	Kanji	CancelAndIMEOff
+Conversion	OFF	CancelAndIMEOff
+Conversion	ON	IMEOn
+DirectInput	Kanji	IMEOn
+DirectInput	ON	IMEOn
+Precomposition	Kanji	CancelAndIMEOff
+Precomposition	OFF	CancelAndIMEOff
+Precomposition	ON	IMEOn
