@@ -2,4 +2,4 @@
 spell
 vim-filetype-haskell
 bundle/*
-!bundle/.keep
+!bundle/neobundle.sh
