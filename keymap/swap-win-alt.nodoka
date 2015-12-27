@@ -1,0 +1,18 @@
+# swap Win and Alt
+mod windows += LAlt
+mod alt -= LAlt
+key *LAlt = *LWin
+
+mod alt += LWin
+mod windows -= LWin
+key *LWin = LAlt
+
+mod windows += RAlt
+mod alt -= RAlt
+key *RAlt = *RWin
+
+mod alt += RWin
+mod windows -= RWin
+key *RWin = RAlt
+
+define SwapWinAlt

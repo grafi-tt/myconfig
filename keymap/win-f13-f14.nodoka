@@ -1,0 +1,12 @@
+# one-shot F13 and F14 by L-Win and R-Win
+def key F13 = 0x64
+def key F14 = 0x65
+
+mod !!win
+if ( swapWinAlt )
+	key W-LAlt = F13
+	key W-RAlt = F14
+else
+	key W-LWin = F13
+	key W-RWin = F14
+endif

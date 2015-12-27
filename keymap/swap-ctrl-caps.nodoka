@@ -1,0 +1,8 @@
+# swap L-Ctrl and CapsLock
+mod control += Caps
+key *Caps = *LCtrl
+
+mod control -= LCtrl
+key *LCtrl = *Caps
+
+define SwapCtrlCaps

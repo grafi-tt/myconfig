@@ -1,8 +1,0 @@
-#include "micro-tron.nodoka"
-include "104.nodoka"
-mod !!win
-def key F13 = 0x64
-def key F14 = 0x65
-key W-LWin = F13
-key W-RWin = F14
-def option mouse-event = true
