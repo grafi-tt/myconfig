@@ -25,3 +25,6 @@ indent_size = 2
 [{*.vim,{.gvimrc,.vimrc}*}]
 indent_style = space
 indent_size = 2
+
+[*.{ps1,bat}]
+end_of_line = crlf
