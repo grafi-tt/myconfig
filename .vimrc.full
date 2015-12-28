@@ -55,7 +55,10 @@ set backup
 set backupdir=~/.vim_backup
 set swapfile
 set directory=~/.vim_swap
-set cryptmethod=blowfish2
+try
+  set cryptmethod=blowfish2
+catch
+endtry
 set clipboard=unnamed,unnamedplus
 set tags=./tags,tags
 
