@@ -15,15 +15,75 @@
 
 
 \ifgrafibeamer@theme
-  % styles
-  \usetheme{Boadilla}
-  \beamertemplatenavigationsymbolsempty
+  %
+  % math font
+  %
+  % do not use fontspec for math
+  \usepackage[T1]{fontenc}
+  \usepackage[libertine,vvarbb,scaled=1.08]{newtxmath}
+  \usepackage[scr=rsfso]{mathalfa}
+  \newcommand{\hmmax}{0}
+  \newcommand{\bmmax}{2}
 
+  %
+  % load theme
+  %
+  % workaround http://d.hatena.ne.jp/zrbabbler/20151017/1445050010
+  \directlua{tex.enableprimitives("", {"suppressfontnotfounderror"})}
+  \usefonttheme{professionalfonts}
+  \usetheme[numbering=fraction]{metropolis}
+
+  %
+  % font override
+  %
+  \usepackage{luatexja-fontspec}
+
+  \setsansjfont[
+    BoldFont={mplus-1p-bold}
+  ]{mplus-1p-regular}
+  \setmainjfont[
+    BoldFont={mplus-1p-bold}
+  ]{mplus-1p-regular}
+  %\setsansfont[
+  %  BoldFont={mplus-1p-bold}
+  %]{mplus-1p-regular}
+  %\setmainfont[
+  %  BoldFont={mplus-1p-bold}
+  %]{mplus-1p-regular}
+  \setsansfont[
+    BoldFont={NeueHaasUnicaPro-Bold},
+    ItalicFont={NeueHaasUnicaPro-Italic},
+    BoldItalicFont={NeueHaasUnicaPro-BoldItalic}
+  ]{NeueHaasUnicaPro-Regular}
+  \setmainfont[
+    BoldFont={NeueHaasUnicaPro-Bold},
+    ItalicFont={NeueHaasUnicaPro-Italic},
+    BoldItalicFont={NeueHaasUnicaPro-BoldItalic}
+  ]{NeueHaasUnicaPro-Regular}
+  \setmonofont[
+    BoldFont={Inconsolata-Bold},
+    Scale=1.08
+  ]{Inconsolata-Regular}
+
+  % styles
   \setbeamertemplate{description item}{%
     \insertdescriptionitem\hfill
   }
+  \setbeamersize{
+    text margin left=0.03\paperwidth,
+    text margin right=0.03\paperwidth
+  }
 
   % colors
+  \definecolor{mystructure}{HTML}{BF0040}
+  \setbeamercolor{normal text}{
+    fg=black,
+    bg=white
+  }
+  \setbeamercolor{palette primary}{
+    fg=mystructure,
+    bg=white
+  }
   \usecolortheme[named=purple]{structure}
   \setbeamercolor{alerted text}{fg=orange!70!red}
   \setbeamercolor{block title example}{bg=violet!25,fg=blue!20!violet!75!black}
@@ -35,22 +95,6 @@
   \usebeamercolor{alerted text}
   \colorlet{myalert}{fg}
 
-  % fonts
-  \usepackage{luatexja-fontspec}
-
-  \setsansjfont[
-    BoldFont={mplus-1p-bold},
-    ItalicFont={mplus-1p-regular},
-    BoldItalicFont={mplus-1p-bold}
-  ]{mplus-1p-regular}
-  \setmainjfont[
-    BoldFont={mplus-1p-bold},
-    ItalicFont={mplus-1p-regular},
-    BoldItalicFont={mplus-1p-bold}
-  ]{mplus-1p-regular}
-
-  %\usefonttheme[onlymath]{serif}
-  \boldmath
 \fi
 
 \ifgrafibeamer@commands
