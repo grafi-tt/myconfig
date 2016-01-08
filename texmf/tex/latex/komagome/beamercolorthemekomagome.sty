@@ -1,0 +1,93 @@
+% Copyright 2016 Shunsuke Shimizu
+%
+% This work is roughly based on mtheme (https://github.com/matze/mtheme).
+%
+% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%
+% TODO: make dtx?
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemekomagome}[2016/01/06 Komagome color theme]
+
+
+%
+% \textsc{komagome} color theme
+%
+
+
+%
+%% Base colors
+%
+
+\definecolor{kmWhite}{HTML}{FFFFFF}
+\definecolor{kmBlack}{HTML}{222222}
+\definecolor{kmGray}{HTML}{555555}
+
+\definecolor{kmGreen}{HTML}{006C50}% L:35, a:-100, b:0
+\definecolor{kmRed}{HTML}{C10000}% L:35, a:80, b:60
+\definecolor{kmBlue}{HTML}{003CE1}% L:35, a:50, b:-86.60
+
+\definecolor{kmLightRed}{HTML}{D73E50}% L:50, a:60, b:25
+
+
+%
+%% Base styles
+%
+
+% All colors in the \textsc{komagome} theme are derived from the definitions
+% of |normal text|, |alerted text|, |example text|, |auxiliary text|, and
+% |primary palette|.
+\setbeamercolor{normal text}{fg=kmBlack}
+\setbeamercolor{alerted text}{fg=kmBlue}
+\setbeamercolor{example text}{fg=kmBlack}
+\setbeamercolor{auxiliary text}{fg=kmGray}
+
+% The “primary” palette should be used for the most important navigational
+% elements, and possibly of other elements.
+\setbeamercolor{palette primary}{fg=kmLightRed, bg=kmWhite}
+
+
+%
+%% Derived colors
+%
+
+% The titles and structural elements (e.g. |itemize| bullets) are set in the
+% same color as |normal text|. This would ideally done by setting |normal text|
+% as a parent style, which we do to set |titlelike|, but this doesn't work for
+% |structure| as its foreground is set explicitly in
+% |beamercolorthemedefault.sty|.
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{author}{use=auxiliary text, parent=auxiliary text}
+\setbeamercolor{date}{use=auxiliary text, parent=auxiliary text}
+\setbeamercolor{institute}{use=auxiliary text, parent=auxiliary text}
+\setbeamercolor{structure}{use=normal text, fg=normal text.fg}
+
+% The \textsc{komagome} theme uses the “primary” palette for frame titles and
+% slides.
+\setbeamercolor{title}{parent=palette primary}
+\setbeamercolor{section title}{parent=palette primary}
+\setbeamercolor{plain title}{parent=palette primary}
+\setbeamercolor{frametitle}{parent=palette primary}
+
+% Blocks
+\setbeamercolor{block title}{parent=normal text}
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+\setbeamercolor{block body}{bg=kmWhite}
+\setbeamercolor{block body alerted}{parent=block body}
+\setbeamercolor{block body example}{parent=block body}
+
+% Footer
+\setbeamercolor{footline}{parent=auxiliary text}
+
+% Footnotes
+\setbeamercolor{footnote}{use=normal text, fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}

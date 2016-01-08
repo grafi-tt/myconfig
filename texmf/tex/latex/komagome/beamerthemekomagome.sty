@@ -1,0 +1,105 @@
+% Copyright 2016 Shunsuke Shimizu
+%
+% This work is roughly based on mtheme (https://github.com/matze/mtheme).
+%
+% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%
+% TODO: make dtx?
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemekomagome}[2016/01/06 Komagome Beamer theme]
+
+
+%
+% \textsc{komagome} main theme
+%
+
+% The primary job of this package is to load the component sub-packages of the
+% \textsc{komagome} theme and route the theme options accordingly. It also
+% provides some custom commands and environments for the user.
+
+% Load required packages.
+\RequirePackage{etoolbox}
+\RequirePackage{pgfopts}
+
+
+%
+%% \subsubsection{Options}
+%
+
+% First of all we define a macro for the user to set options.
+\newcommand{\kmset}[1]{\pgfkeys{/komagome/.cd,#1}}
+
+% Then we need to pass the unknown options to the sub-packages.
+\pgfkeys{/komagome/.cd,
+  .search also={
+    /komagome/inner,
+    /komagome/outer,
+    /komagome/color,
+  }
+}
+
+% margin setting
+
+% macro: margin
+% macro: \@komagome@margin
+% Set the margin
+\pgfkeys{/komagome/.cd,
+  margin/.store in=\@komagome@margin,
+  margin=.05\paperwidth,
+}
+
+
+%
+%% Component sub-packages
+%
+
+% Having processed the options, we can now load the component sub-packages of
+% the theme.
+\useinnertheme{komagome}
+\useoutertheme{komagome}
+\usecolortheme{komagome}
+\usefonttheme{komagome}
+
+% The |tol| theme for |pgfplots| is only loaded if |pgfplots| is used.
+\AtEndPreamble{%
+  \@ifpackageloaded{pgfplots}{\RequirePackage{pgfplotsthemetol}}{}%
+}
+
+
+%
+%% Custom commands
+%
+
+% macro: \plain
+% Creates a plain frame, suitable for displaying images or a few words.
+\newcommand{\plain}[2][]{%
+  \begingroup
+    \setbeamercolor{background canvas}{
+      use=palette primary,
+      parent=palette primary
+    }
+    \begin{frame}[c]{#1}
+      \begin{center}
+        \usebeamercolor[fg]{palette primary}
+        \usebeamerfont{plain title}
+        #2
+      \end{center}
+    \end{frame}
+  \endgroup
+}
+
+
+%
+%% margin
+%
+
+\setbeamersize{
+  text margin left=\@komagome@margin,
+  text margin right=\@komagome@margin,
+}
+
+
+% Process package options
+%\@komagome@setdefaults
+\ProcessPgfOptions{/komagome}

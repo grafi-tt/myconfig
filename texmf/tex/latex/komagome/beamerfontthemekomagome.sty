@@ -1,0 +1,203 @@
+% Copyright 2016 Shunsuke Shimizu
+%
+% This work is roughly based on mtheme (https://github.com/matze/mtheme).
+%
+% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%
+% TODO: make dtx?
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemekomagome}[2016/01/06 Komagome color theme]
+
+
+%
+% \textsc{komagome} font theme
+%
+
+% Load required packages.
+\RequirePackage{etoolbox}
+
+
+%
+%% Load fonts
+%
+
+% If the presentation is compiled with XeLaTeX or LuaLaTeX the fontspec package
+% will be loaded.
+\ifboolexpr{bool {xetex} or bool {luatex}}{
+% Disable beamer's font twiddling and do all font setting manually.
+  \usefonttheme{professionalfonts}
+% Load fontspec. Math setting is left to unicode-math
+  \RequirePackage[no-math]{fontspec}
+% Load unicode-math.
+% The familiar math style (determining roman or italic) is used.
+  \RequirePackage[math-style=TeX]{unicode-math}
+
+% Enable Japanese typesetting Support
+% TODO: make Japanese support optional and check LuaTeX-ja
+  \RequirePackage{luatexja-fontspec}
+% Treat Greek or Cyclic letters and signs as non-Japanese.
+  \ltjsetparameter{jacharrange={-2,-3,-8}}
+
+% To simplify the check whether fonts are installed, a set macros is
+% defined.
+
+% macro: \checkfont
+% Checks if a font is installed and increases |fontsnotfound| counter if not.
+  \newcounter{fontsnotfound}
+  \newcommand{\checkfont}[1]{%
+    \suppressfontnotfounderror=1%
+    \font\x = "#1" at 10pt
+    \selectfont
+    \ifx\x\nullfont%
+      \stepcounter{fontsnotfound}%
+    \fi%
+    \suppressfontnotfounderror=0%
+  }
+
+% macro: \iffontexists
+% Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
+% the comma separated list in the first argument.
+%    \begin{macrocode}
+  \newcommand{\iffontsexist}[3]{%
+    \setcounter{fontsnotfound}{0}%
+    \expandafter\forcsvlist\expandafter%
+    \checkfont\expandafter{#1}%
+    \ifnum\value{fontsnotfound}=0%
+      #2%
+    \else%
+      #3%
+    \fi%
+  }
+
+% Try to load |Neue Haas Unica Pro| fonts for main sans fonts.
+% If it failed, try to fallback to |TeX Gyre Heros| (a Helvetica clone).
+  \iffontsexist{Neue Haas Unica Pro,
+                Neue Haas Unica Pro Italic,
+                Neue Haas Unica Pro Bold,
+                Neue Haas Unica Pro Bold Italic}{%
+    \setmainfont{Neue Haas Unica Pro}
+    \setsansfont{Neue Haas Unica Pro}
+  }{
+    \PackageWarning{beamerthemekomagome}{%
+      Could not find Neue Unica font%
+    }
+    \iffontsexist{TeX Gyre Heros}{
+      \setmainfont{TeX Gyre Heros}
+      \setsansfont{TeX Gyre Heros}
+    }{
+      \PackageWarning{beamerthemekomagome}{%
+        Could not find TeX Gyre Heros font%
+      }
+    }
+  }
+
+% Try to load |Inconsolata| font for the monospaced font.
+% It should be scaled a bit for consistent appearance.
+% TODO: try |Lucida Typewriter| when I buy Lucida fonts from TUG.
+  \iffontsexist{Inconsolata-Regular, Inconsolata-Bold}{%
+    \setmonofont[
+      BoldFont={Inconsolata-Bold},
+      Scale=1.08
+    ]{Inconsolata-Regular}
+  }{
+    \PackageWarning{beamerthememetropolis}{%
+      Could not find Inconsolata font%
+    }
+  }
+
+% Try to load |XITS Math| (Times-like) font for math.
+% This font is included in TeXLive, though whether it is installed depends on
+% a installer.
+  \iffontsexist{XITS Math}{%
+    \setmathfont[Scale=1.05]{XITS Math}
+    \setmathfont[Scale=1.05,
+      range={\mathcal,\mathbfcal}, StylisticSet=1]{XITS Math}
+  }{
+    \PackageWarning{beamerthememetropolis}{%
+      Could not find XITS Math font%
+    }
+  }
+
+% Try to load |M+ 1p| regular and bold fonts, included in M+ fonts,
+% for the Japanese sans and main font.
+% M+ fonts is free and modern Gothic styled Japanese fonts.
+% TODO: Make Japanese font loading optional.
+% TODO: Try FontWorks's UD Kakugo when I buy that.
+  \iffontsexist{mplus-1p-regular}{%
+    \setmainjfont[BoldFont={mplus-1p-bold}]{mplus-1p-regular}
+    \setsansjfont[BoldFont={mplus-1p-bold}]{mplus-1p-regular}
+  }{
+    \PackageWarning{beamerthememetropolis}{%
+      Could not find M+ 1p regular and bold fonts%
+    }
+  }
+
+% Try to load |Ayita Pro| font for the use in titles.
+  \iffontsexist{Ayita Pro}{%
+    \newfontfamily{\ayita}{Ayita Pro}
+  }{
+    \PackageWarning{beamerthemekomagome}{%
+      Could not find Ayita font%
+    }
+    \newcommand{\ayita}{}
+  }
+
+% Try to load |Cisalpin LT Std| for auxiliary use
+  \iffontsexist{Cisalpin LT Std}{%
+    \newfontfamily{\cisalpin}{Cisalpin LT Std}
+    \newcommand{\cisalpinendash}{\raisebox{.17ex}{\char"2013}}
+  }{
+    \PackageWarning{beamerthemekomagome}{%
+      Could not find Cisalpin font%
+    }
+    \newcommand{\cisalpin}{}
+  }
+
+% Hook to use monospaced numbers inside tabular
+  \AtBeginEnvironment{tabular}{%
+    \addfontfeature{Numbers={Monospaced}}%
+  }%
+%
+}{%
+  \PackageWarning{beamerthememetropolis}{%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts%
+  }
+}
+
+%
+%% Set font size and family to each part.
+%
+\setbeamerfont{title}{size=\huge,family=\ayita}
+\setbeamerfont*{subtitle}{size=\Large,family=\ayita}
+
+\setbeamerfont{author}{size=\normalsize,family=\cisalpin}
+\setbeamerfont{date}{size=\normalsize,family=\cisalpin}
+\setbeamerfont{institute}{size=\small,family=\cisalpin}
+
+\setbeamerfont{section title}{size=\LARGE,family=\ayita}
+\setbeamerfont{frametitle}{size=\LARGE,family=\ayita}
+\setbeamerfont{plain title}{size=\LARGE,family=\ayita}
+
+\setbeamerfont{block title}{size=\normalsize,%
+                            series=\bfseries}
+\setbeamerfont{block title alerted}{size=\normalsize,%
+                                    series=\bfseries}
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{series=\bfseries}
+\setbeamerfont{description item}{series=\bfseries}
+\setbeamerfont{page number in head/foot}{size=\scriptsize,family=\cisalpin}
+\setbeamerfont{bibliography entry author}{size=\normalsize,%
+                                          series=\normalfont}
+\setbeamerfont{bibliography entry title}{size=\normalsize,%
+                                         series=\bfseries}
+\setbeamerfont{bibliography entry location}{size=\normalsize,%
+                                            series=\normalfont}
+\setbeamerfont{bibliography entry note}{size=\small,%
+                                        series=\normalfont}
+
+
+%
+%% Use bold style for emph.
+%
+\DeclareTextFontCommand{\emph}{\bfseries}

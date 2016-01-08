@@ -1,0 +1,275 @@
+% Copyright 2016 Shunsuke Shimizu
+%
+% This work is roughly based on mtheme (https://github.com/matze/mtheme).
+%
+% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%
+% TODO: make dtx?
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemekomagome}[2016/01/06 Komagome inner theme]
+
+
+%
+% \textsc{komagome} inner theme
+%
+
+% A |beamer| inner theme dictates the style of the frame elements traditionally
+% set in the ``body'' of each slide. These include:
+%
+% \begin{itemize}
+%   \item title, part, and section pages;
+%   \item itemize, enumerate, and description environments;
+%   \item block environments including theorems and proofs;
+%   \item figures and tables; and
+%   \item footnotes and plain text.
+% \end{itemize}
+%
+
+% Load required packages.
+\RequirePackage{tikz}
+
+
+%
+%% \subsubsection{Title page}
+%
+
+% macro: title page
+% Template for the title page. Each element is only typset if it is defined
+% by the user. If |\subtitle| is empty, for example, it won't leave a blank
+% space on the title slide.
+\setbeamertemplate{title page}{
+  {%
+    \raggedright
+    \setlength{\parskip}{\@komagome@parskip}
+    \ifx\inserttitlegraphic\@empty\else\usebeamertemplate*{title graphic}\fi
+    \vfill
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+% Beamer's definition of |\insertauthor| is always nonempty, so we have
+% to test another macro initialized by |\author{...}| to see if the user has
+% defined an author. This solution was suggested by Enrico Gregorio in an
+% answer to \href{https://tex.stackexchange.com/questions/241306/}{this
+% Stack Exchange question}.
+    \vspace{1.5em}%
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+    \vfill
+  }
+}
+
+% Normal people should use |\maketitle| or |\titlepage| instead of using the
+% |title page| beamer template directly. Beamer already defines these macros,
+% but we patch them here to make the title page |[plain]| by default, remove
+% |\@thanks|, and ensure the title frame number doesn't count.
+%
+% macro: \maketitle
+% macro: \titlepage
+%   Inserts the title frame, or causes the current frame to use the
+%   |title page| template.
+\def\maketitle{%
+  \ifbeamer@inframe
+    \titlepage
+  \else
+    \frame[plain]{\titlepage}%
+  \fi
+}
+\def\titlepage{%
+  \usebeamertemplate{title page}%
+}
+
+% macro: title graphic
+%   Set the title graphic in a zero-height box, so it doesn't change the
+%   position of other elements.
+\setbeamertemplate{title graphic}{
+  \vbox to 0pt {%
+    \vspace{2em}%
+    \inserttitlegraphic
+  }%
+  \nointerlineskip
+}
+
+% macro: title
+%   Set the title on the title page.
+\setbeamertemplate{title}{%
+  \inserttitle
+  \par
+  \vspace{0.2em}%
+}
+
+% macro: subtitle
+%   Set the subtitle on the title page.
+\setbeamertemplate{subtitle}{
+  \insertsubtitle
+  \par
+  \vspace{0.2em}%
+}
+
+% macro: author
+%   Set the author on the title page.
+\setbeamertemplate{author}{
+  \vspace{1em}%
+  \insertauthor
+  \par
+}
+
+% macro: institute
+%   Set the institute on the title page.
+\setbeamertemplate{institute}{
+  \vspace{0.2em}%
+  \insertinstitute
+  \par
+}
+
+% macro: date
+%   Set the date on the title page.
+\setbeamertemplate{date}{
+  \vspace{1em}%
+  \insertdate
+  \par
+}
+
+
+%
+%% Section page
+%
+
+% macro: section page
+%   Template for the section title slide at the beginning of each section.
+\setbeamertemplate{section page}{
+  \centering
+  \usebeamercolor[fg]{section title}
+  \usebeamerfont{section title}
+  \insertsectionhead\\
+}
+\AtBeginSection{
+  \ifbeamer@inframe
+    \sectionpage
+  \else
+    \frame[plain,c]{\sectionpage}
+  \fi
+}
+
+
+%
+%% Block environments
+%
+
+% Regular block environment
+\newlength{\@komagome@blockskip}
+\setbeamertemplate{block begin}{%
+  \setlength{\parskip}{\@komagome@parskip}%
+  \vspace*{1ex}%
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip]{block title}%
+      \usebeamerfont*{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}%
+  \usebeamerfont{block body}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip,
+    vmode]{block body}%
+}
+\setbeamertemplate{block end}{%
+  \end{beamercolorbox}%
+  \vspace*{0.2ex}%
+}
+
+% Alerted block environment
+\setbeamertemplate{block alerted begin}{%
+  \setlength{\parskip}{\@komagome@parskip}%
+  \vspace*{1ex}%
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip]{block title alerted}
+      \usebeamerfont*{block title alerted}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}
+  \usebeamerfont{block body alerted}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip,
+    vmode]{block body alerted}%
+}
+\setbeamertemplate{block alerted end}{%
+  \end{beamercolorbox}%
+  \vspace*{0.2ex}%
+}
+
+% Example block environment
+\setbeamertemplate{block example begin}{%
+  \setlength{\parskip}{\@komagome@parskip}%
+  \vspace*{1ex}%
+  \begin{beamercolorbox}[%
+    ht=2.4ex,
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip]{block title example}
+      \usebeamerfont*{block title example}\insertblocktitle%
+  \end{beamercolorbox}%
+  \vspace*{-1pt}
+  \usebeamerfont{block body example}%
+  \begin{beamercolorbox}[%
+    dp=1ex,
+    leftskip=\@komagome@blockskip,
+    rightskip=\@komagome@blockskip,
+    vmode]{block body example}%
+}
+\setbeamertemplate{block example end}{%
+  \end{beamercolorbox}%
+  \vspace*{0.2ex}%
+}
+
+
+%
+%% Lists and floats
+%
+
+\setbeamertemplate{itemize items}{$\bullet$}
+\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption}[numbered]
+
+
+%
+%% Footnotes
+%
+
+\setbeamertemplate{footnote}{%
+  \parindent 0em\noindent%
+  \raggedright
+  \usebeamercolor{footnote}\hbox to 0.8em{\hfil\insertfootnotemark}\insertfootnotetext\par%
+}
+
+
+%
+%% Text and spacing settings
+%
+
+\newlength{\@komagome@parskip}
+\setlength{\@komagome@parskip}{0.5em}
+\setlength{\parskip}{\@komagome@parskip}
+\linespread{1.12}
+\setbeamersize{description width=2em}
+
+% By default, Beamer frames offer the |c| option to \textit{almost} vertically
+% center the text, but the placement is a little too high. To fix this, we
+% redefine the |c| option to equalize |\beamer@frametopskip| and
+% |\beamer@framebottomskip|. This solution was suggested by Enrico Gregorio in
+% an answer to \href{http://tex.stackexchange.com/questions/247826/}{this
+% Stack Exchange question}.
+\define@key{beamerframe}{c}[true]{% centered
+  \beamer@frametopskip=0pt plus 1fill\relax%
+  \beamer@framebottomskip=0pt plus 1fill\relax%
+  \beamer@frametopskipautobreak=0pt plus .4\paperheight\relax%
+  \beamer@framebottomskipautobreak=0pt plus .6\paperheight\relax%
+  \def\beamer@initfirstlineunskip{}%
+}

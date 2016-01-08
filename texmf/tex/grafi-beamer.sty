@@ -15,92 +15,23 @@
 
 
 \ifgrafibeamer@theme
-  %
-  % math font
-  %
-  % do not use fontspec for math
-  \usepackage[T1]{fontenc}
-  \usepackage[libertine,vvarbb,scaled=1.08]{newtxmath}
-  \usepackage[scr=rsfso]{mathalfa}
-  \newcommand{\hmmax}{0}
-  \newcommand{\bmmax}{2}
-
-  %
-  % load theme
-  %
   % workaround http://d.hatena.ne.jp/zrbabbler/20151017/1445050010
   \directlua{tex.enableprimitives("", {"suppressfontnotfounderror"})}
-  \usefonttheme{professionalfonts}
-  \usetheme[numbering=fraction]{metropolis}
-
-  %
-  % font override
-  %
-  \usepackage{luatexja-fontspec}
-
-  \setsansjfont[
-    BoldFont={mplus-1p-bold}
-  ]{mplus-1p-regular}
-  \setmainjfont[
-    BoldFont={mplus-1p-bold}
-  ]{mplus-1p-regular}
-  %\setsansfont[
-  %  BoldFont={mplus-1p-bold}
-  %]{mplus-1p-regular}
-  %\setmainfont[
-  %  BoldFont={mplus-1p-bold}
-  %]{mplus-1p-regular}
-  \setsansfont[
-    BoldFont={NeueHaasUnicaPro-Bold},
-    ItalicFont={NeueHaasUnicaPro-Italic},
-    BoldItalicFont={NeueHaasUnicaPro-BoldItalic}
-  ]{NeueHaasUnicaPro-Regular}
-  \setmainfont[
-    BoldFont={NeueHaasUnicaPro-Bold},
-    ItalicFont={NeueHaasUnicaPro-Italic},
-    BoldItalicFont={NeueHaasUnicaPro-BoldItalic}
-  ]{NeueHaasUnicaPro-Regular}
-  \setmonofont[
-    BoldFont={Inconsolata-Bold},
-    Scale=1.08
-  ]{Inconsolata-Regular}
-
-  % styles
-  \setbeamertemplate{description item}{%
-    \insertdescriptionitem\hfill
-  }
-  \setbeamersize{
-    text margin left=0.03\paperwidth,
-    text margin right=0.03\paperwidth
-  }
-
-  % colors
-  \definecolor{mystructure}{HTML}{BF0040}
-  \setbeamercolor{normal text}{
-    fg=black,
-    bg=white
-  }
-  \setbeamercolor{palette primary}{
-    fg=mystructure,
-    bg=white
-  }
-  \usecolortheme[named=purple]{structure}
-  \setbeamercolor{alerted text}{fg=orange!70!red}
-  \setbeamercolor{block title example}{bg=violet!25,fg=blue!20!violet!75!black}
-  \setbeamercolor{block body example}{bg=violet!10,fg=black}
-
+  % load theme
+  \usetheme[numbering=fraction,information=authorinfo]{komagome}
+  %\usetheme[numbering=fraction]{komagome}
+  % colors (used in my old slides)
   \colorlet{myred}{red!80!black}
   \colorlet{myblue}{blue!70!black}
   \colorlet{mygreen}{green!70!blue!80!black}
-  \usebeamercolor{alerted text}
-  \colorlet{myalert}{fg}
-
+  \colorlet{myalert}{orange!70!red}
 \fi
 
 \ifgrafibeamer@commands
   \usepackage{tikz}
   \usetikzlibrary{arrows, shapes, positioning}
 
+  % Define temporal pgfkeys in tikz
   % http://tex.stackexchange.com/a/6155
   \tikzset{onslide/.code args = {<#1>#2}{%
     \only<#1>{\pgfkeysalso{#2}}
@@ -109,7 +40,7 @@
     \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}}
   }}
 
-  % inlined nodes and references (TODO: improve those)
+  % Inlined nodes and references (TODO: improve those)
   \tikzset{inline/.style = {remember picture, anchor=base, inner sep=0mm, outer sep=0mm}}
   \newcommand{\inline}[3][]{\tikz[baseline=(#2.base)]{\node[inline,#1](#2){#3};}}
 
