@@ -7,7 +7,7 @@
 %
 % TODO: make dtx?
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamercolorthemekomagome}[2016/01/06 Komagome color theme]
+\ProvidesPackage{beamerfontthemekomagome}[2016/01/06 Komagome font theme]
 
 
 %
@@ -55,7 +55,7 @@
     \suppressfontnotfounderror=0%
   }
 
-% macro: \iffontexists
+% macro: \iffontsexist
 % Resets the |fontsnotfound| counter and calls |\checkfont| for each font in
 % the comma separated list in the first argument.
 %    \begin{macrocode}
@@ -101,7 +101,7 @@
       Scale=1.08
     ]{Inconsolata-Regular}
   }{
-    \PackageWarning{beamerthememetropolis}{%
+    \PackageWarning{beamerthemekomagome}{%
       Could not find Inconsolata font%
     }
   }
@@ -110,32 +110,32 @@
 % This font is included in TeXLive, though whether it is installed depends on
 % a installer.
   \iffontsexist{XITS Math}{%
-    \setmathfont[Scale=1.05]{XITS Math}
-    \setmathfont[Scale=1.05,
+    \setmathfont[Scale=1.06]{XITS Math}
+    \setmathfont[Scale=1.06,
       range={\mathcal,\mathbfcal}, StylisticSet=1]{XITS Math}
   }{
-    \PackageWarning{beamerthememetropolis}{%
+    \PackageWarning{beamerthemekomagome}{%
       Could not find XITS Math font%
     }
   }
 
-% Try to load |M+ 1p| regular and bold fonts, included in M+ fonts,
-% for the Japanese sans and main font.
-% M+ fonts is free and modern Gothic styled Japanese fonts.
 % TODO: Make Japanese font loading optional.
-% TODO: Try FontWorks's UD Kakugo when I buy that.
-  \iffontsexist{mplus-1p-regular}{%
-    \setmainjfont[BoldFont={mplus-1p-bold}]{mplus-1p-regular}
-    \setsansjfont[BoldFont={mplus-1p-bold}]{mplus-1p-regular}
+% Try to load Fontworks's |UDKakugo_Small Pr6| font.
+  \iffontsexist{UDKakugo_Small Pr6 M, UDKakugo_Small Pr6 B}{
+    \setmainjfont[BoldFont={UDKakugo_Small Pr6 B}]{UDKakugo_Small Pr6 M}
+    \setsansjfont[BoldFont={UDKakugo_Small Pr6 B}]{UDKakugo_Small Pr6 M}
+    \newjfontfamily{\udkakugoprop}[Scale=0.97,
+      YokoFeatures={JFM=prop}, Kerning=On, RawFeature=pwid,
+      BoldFont={UDKakugo_Small Pr6 B}]{UDKakugo_Small Pr6 M}
   }{
-    \PackageWarning{beamerthememetropolis}{%
-      Could not find M+ 1p regular and bold fonts%
+    \PackageWarning{beamerthemekomagome}{%
+      Could not find Fontworks's UDKakugo Small M and B fonts%
     }
   }
 
 % Try to load |Ayita Pro| font for the use in titles.
-  \iffontsexist{Ayita Pro}{%
-    \newfontfamily{\ayita}{Ayita Pro}
+  \iffontsexist{Ayita Pro}{
+    \newfontfamily{\ayita}[Scale=1.05]{Ayita Pro}
   }{
     \PackageWarning{beamerthemekomagome}{%
       Could not find Ayita font%
@@ -145,22 +145,33 @@
 
 % Try to load |Cisalpin LT Std| for auxiliary use
   \iffontsexist{Cisalpin LT Std}{%
-    \newfontfamily{\cisalpin}{Cisalpin LT Std}
+    \newfontfamily{\cisalpin}[Scale=1.04]{Cisalpin LT Std}
     \newcommand{\cisalpinendash}{\raisebox{.17ex}{\char"2013}}
   }{
     \PackageWarning{beamerthemekomagome}{%
       Could not find Cisalpin font%
     }
     \newcommand{\cisalpin}{}
+    \newcommand{\cisalpinendash}{--}
+  }
+
+% Try to load Fontworks's |New Cezanne|
+  \iffontsexist{NewCezanne Pro M}{%
+    \newjfontfamily{\newcezanne}[BoldFont=NewCezanne Pro B]{NewCezanne Pro M}
+  }{
+    \PackageWarning{beamerthemekomagome}{%
+      Could not find Source NewCezanne M and B fonts%
+    }
+    \newcommand{\newcezanne}{}
   }
 
 % Hook to use monospaced numbers inside tabular
   \AtBeginEnvironment{tabular}{%
     \addfontfeature{Numbers={Monospaced}}%
-  }%
-%
-}{%
-  \PackageWarning{beamerthememetropolis}{%
+  }
+
+}{
+  \PackageWarning{beamerthemekomagome}{%
     You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts%
   }
 }
@@ -168,16 +179,16 @@
 %
 %% Set font size and family to each part.
 %
-\setbeamerfont{title}{size=\huge,family=\ayita}
-\setbeamerfont*{subtitle}{size=\Large,family=\ayita}
+\setbeamerfont{title}{size=\huge,family=\ayita\udkakugoprop}
+\setbeamerfont*{subtitle}{size=\Large,family=\ayita\udkakugoprop}
 
-\setbeamerfont{author}{size=\normalsize,family=\cisalpin}
-\setbeamerfont{date}{size=\normalsize,family=\cisalpin}
-\setbeamerfont{institute}{size=\small,family=\cisalpin}
+\setbeamerfont{author}{size=\normalsize,family=\cisalpin\udkakugoprop}
+\setbeamerfont{date}{size=\normalsize,family=\cisalpin\udkakugoprop}
+\setbeamerfont{institute}{size=\small,family=\cisalpin\udkakugoprop}
 
-\setbeamerfont{section title}{size=\LARGE,family=\ayita}
-\setbeamerfont{frametitle}{size=\LARGE,family=\ayita}
-\setbeamerfont{plain title}{size=\LARGE,family=\ayita}
+\setbeamerfont{section title}{size=\LARGE,family=\ayita\udkakugoprop}
+\setbeamerfont{frametitle}{size=\LARGE,family=\ayita\udkakugoprop}
+\setbeamerfont{plain title}{size=\LARGE,family=\ayita\udkakugoprop}
 
 \setbeamerfont{block title}{size=\normalsize,%
                             series=\bfseries}
@@ -186,7 +197,7 @@
 \setbeamerfont{caption}{size=\small}
 \setbeamerfont{caption name}{series=\bfseries}
 \setbeamerfont{description item}{series=\bfseries}
-\setbeamerfont{page number in head/foot}{size=\scriptsize,family=\cisalpin}
+\setbeamerfont{page number in head/foot}{size=\scriptsize,family=\cisalpin\udkakugoprop}
 \setbeamerfont{bibliography entry author}{size=\normalsize,%
                                           series=\normalfont}
 \setbeamerfont{bibliography entry title}{size=\normalsize,%
