@@ -72,8 +72,15 @@
   \newcommand{\from}{\leftarrow}
   \newcommand{\From}{\Leftarrow}
   \newcommand{\To}{\Rightarrow}
-  \newcommand{\relto}{\mathrel{\ooalign{\hfil\raisebox{.3pt}{$\shortmid$}\hfil\crcr$\rightarrow$}}}
-  \newcommand{\longrelto}{\mathrel{\ooalign{\hfil\raisebox{.3pt}{$\shortmid$}\hfil\crcr$\longrightarrow$}}}
+  \newcommand{\relarrow}[1]{\mathrel{\ooalign{$#1$\crcr\hss\raisebox{.1ex}[0ex][0ex]{$\shortmid$}\hss}}}
+  \newcommand{\relto}{\relarrow{\rightarrow}}
+  \newcommand{\kto}{\relto}
+  \newcommand{\relfrom}{\relarrow{\leftarrow}}
+  \newcommand{\kfrom}{\relfrom}
+  \newcommand{\longrelto}{\relarrow{\longrightarrow}}
+  \newcommand{\longkto}{\longrelto}
+  \newcommand{\longrelfrom}{\relarrow{\longlightarrow}}
+  \newcommand{\longkfrom}{\longrelfrom}
 \fi
 
 % category theory
