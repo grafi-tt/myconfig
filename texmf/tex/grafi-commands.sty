@@ -123,6 +123,8 @@
   \newcommand{\CatC}{\mathbb{C}}
   \newcommand{\CatD}{\mathbb{D}}
   \newcommand{\CatE}{\mathbb{E}}
+
+  \newcommand{\op}{\mathrm{op}}
 \fi
 
 % functors, monads
@@ -144,6 +146,7 @@
   \newcommand{\bff}{\mathtt{f\hspace{-.2em}f}}
   \newcommand{\sem}[1]{\llbracket#1\rrbracket}
   \newcommand{\Var}{\mathit{\hspace{-.15em}V\hspace{-.32em}ar\hspace{-.05em}}}
+  \newcommand{\FVar}{F\Var}
 
   \newcommand{\quant}[2]{#1#2\mathpunct{.}}
   \newcommand{\qnt}{\quant}
@@ -157,16 +160,21 @@
 
   \newcommand{\gfp}{\operatorname{gfp}}
   \newcommand{\lfp}{\operatorname{lfp}}
+
+  \newcommand{\place}{\underline{\phantom{n}}\,} % place holder
 \fi
 
 % language, automata, modal logic, game
 \ifgraficommands@lang
-  \newcommand{\astr}{\mathord{*}}
   \newcommand{\ltrmodal}[1]{\langle#1\rangle}
   \newcommand{\AP}{\mathrm{A\hspace{-.2em}P}}
+
   \newcommand{\Dia}{\Diamond}
   \newcommand{\Pla}{\Diamond}
   \newcommand{\Opp}{\Box}
+
+  \newcommand{\tr}{\operatorname{\mathsf{tr}}}
+  \newcommand{\trinf}{\tr^{\infty}}
 \fi
 
 % sets
