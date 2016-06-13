@@ -40,6 +40,7 @@ NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 NeoBundle 'def-lkb/vimbufsync'
 NeoBundle 'the-lambda-church/coquille'
 NeoBundle 'derekelkins/agda-vim'
+NeoBundle 'derekwyatt/vim-scala'
 
 NeoBundleLazy 'kana/vim-vspec'
 
