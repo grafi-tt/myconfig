@@ -10,11 +10,15 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
-[{Makefile,*.py}]
+[*.py]
 indent_style = space
 indent_size = 4
 
 [*.{hs,agda}]
+indent_style = space
+indent_size = 2
+
+[*.scala]
 indent_style = space
 indent_size = 2
 
