@@ -1,0 +1,127 @@
+Retrived from: http://www.yqcomputer.com/809_21682_1.htm
+
+xr package and BibTeX
+
+///////////////////////////////////////////////////////////////////////////////
+
+Post by Screwdrive » Thu, 12 Jul 2007 04:30:18
+
+Hi
+
+Is there any way to cross-reference \cite commands in one document
+with BibTeX references in another? In other words, I have document
+"A" which has a full bibliography and lots of references. I'd like to
+use a \cite in document "B" to display the number which corresponds to
+that reference in "A". Generating a bibliography list in "B" isn't
+important. I'm using the xr package for \label cross-referencing and
+it works great, but doesn't seem to handle \cite cross-referencing
+between documents. Is this possible to do?
+
+Thanks,
+Dave
+
+///////////////////////////////////////////////////////////////////////////////
+
+Post by drucber » Thu, 12 Jul 2007 15:35:37
+In article < XXXX@XXXXX.COM >, Screwdriver223 < XXXX@XXXXX.COM > writes:
+|> Path: (deleted)
+|> From: Screwdriver223 < XXXX@XXXXX.COM >
+|> Newsgroups: comp.text.tex
+|> Subject: xr package and BibTeX
+|> Date: Tue, 10 Jul 2007 19:30:18 -0000
+|> Organization: http://www.yqcomputer.com/
+|> Lines: 14
+|> Message-ID: < XXXX@XXXXX.COM >
+|> NNTP-Posting-Host: (deleted)
+|>
+|> Hi
+|>
+|> Is there any way to cross-reference \cite commands in one document
+|> with BibTeX references in another? In other words, I have document
+|> "A" which has a full bibliography and lots of references. I'd like to
+|> use a \cite in document "B" to display the number which corresponds to
+|> that reference in "A". Generating a bibliography list in "B" isn't
+|> important. I'm using the xr package for \label cross-referencing and
+|> it works great, but doesn't seem to handle \cite cross-referencing
+|> between documents. Is this possible to do?
+|>
+|> Thanks,
+|> Dave
+|>
+Hello,
+
+Some years ago, I made that little code (xb.sty) from xr.sty, but never
+documented it, but the syntax is analog to that of xr.sty:
+
+%%
+%% This is file `xb.sty',
+%%
+%%
+%% Created by Jean-Pierre Drucbert as a
+%% Variant of File: xr.dtx Copyright (C) 1993-1994 David Carlisle
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{xb}
+[1997/02/12 v1.02 eXternal Bib-references (JPFD)]
+\def\externalbibdocument{\@ifnextchar[\XB@{\XB@[]}}
+\def\XB@[#1]#2{{%
+\makeatletter
+\def\XB@prefix{#1}%
+\XB@next#2.aux\relax\\}}
+\def\XB@next#1\relax#2\\{%
+\edef\XB@list{#2}%
+\XB@loop{#1}}
+\def\XB@aux{%
+\ifx\XB@list\@empty\else\expandafter\XB@explist\fi}
+
+\def\XB@explist{\expandafter\XB@next\XB@list\\}
+\def\XB@loop#1{\openin\@inputcheck#1\relax
+\ifeof\@inputcheck
+\PackageWarning{xb}{^^JNo file #1^^JBIBCITE'S NOT IMPORTED.^^J}%
+\expandafter\XB@aux
+\else
+\PackageInfo{xb}{IMPORTING BIBCITE'S FROM #1}%
+\expandafter\XB@read\fi}
+\def\XB@read{%
+\read\@inputcheck to\XB@line
+\expandafter\XB@test\XB@line...\XB@}
+\long\def\XB@test#1#2#3#4\XB@{%
+\ifx#1\bibcite
+\bibcite{\XB@prefix#2}{#3}%
+\ifx#1\harvardcite
+\harvardcite{\XB@prefix#2}{#3}%
+\else\ifx#1\@input
+\edef\XB@list{\XB@list#2\relax}%
+\fi\fi\fi
+\ifeof\@inputcheck\expandafter\XB@aux
+\else\expandafter\XB@read\fi}
+
+\endinput
+%%
+%% End of file `xb.sty'.
+
+So you have the \externalbibdocument analog to \externaldocument, with
+also an optional argument. But I did not treat all kinds of citations.
+I hope it could help you.
+
+Regards,
+
+Jean-Pierre
+
+
+--
+Jean-Pierre F. Drucbert (JPFD) Email: jean-pierre dot drucbert at onera dot fr
+ONERA/Centre de Toulouse SRI T. 05-62-25-25-15; FAX: 05-62-25-25-35
+2, avenue Edouard Belin / B.P. 74025 / 31055 - TOULOUSE CEDEX 4
+Look to windward: life never ceases to surprise.
+Avertis *** t/disclaimer http://www.yqcomputer.com/
+
+///////////////////////////////////////////////////////////////////////////////
+
+Post by Screwdrive » Fri, 13 Jul 2007 00:26:37
+On Jul 11, 2:35 am, XXXX@XXXXX.COM (Jean-Pierre F. Drucbert)
+
+
+Fantastic! Works like a charm.
+
+Thanks very much,
+Dave
