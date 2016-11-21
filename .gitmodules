@@ -1,0 +1,3 @@
+[submodule "texmf/tex/latex/pdffill"]
+	path = texmf/tex/latex/pdffill
+	url = git://github.com/kmaed/pdffill.git
