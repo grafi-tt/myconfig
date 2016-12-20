@@ -4,9 +4,9 @@ def key F14 = 0x65
 
 mod !!win
 if ( swapWinAlt )
-	key W-LAlt = F13
-	key W-RAlt = F14
+	key W-LAlt = C-S-F11
+	key W-RAlt = C-S-F12
 else
-	key W-LWin = F13
-	key W-RWin = F14
+	key W-LWin = C-S-F11
+	key W-RWin = C-S-F12
 endif
