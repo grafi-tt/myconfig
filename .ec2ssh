@@ -1,4 +1,4 @@
-profiles 'default', 'eratommsd'
+profiles 'default'
 regions 'ap-northeast-1'
 
 $dot_ec2ssh_numbering = Hash.new(0)
@@ -6,22 +6,34 @@ $dot_ec2ssh_numbering = Hash.new(0)
 # You can use methods of AWS::EC2::Instance.
 # See http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/EC2/Instance.html
 host_line <<END
-<%- if tags['Name'] =~ /^prod\.(mizuki|pop)$/ -%>
+<%- if %w(stage.mizuki prod.mizuki prod.pop).include? tags['Name'] -%>
 Host <%= tags['Name'] %>.<%= $dot_ec2ssh_numbering[tags['Name']] += 1 %>
 <%- else -%>
 Host <%= tags['Name'] %>
 <%- end -%>
-	HostName <%= public_ip_address || private_ip_address %>
-<%- if tags['Name'] =~ /stage\.(?!ssh)/ -%>
+<%- if tags['Name'] =~ /\.ssh/ -%>
+	HostName <%= public_ip_address %>
+<%- else -%>
+	HostName <%= private_ip_address %>
+	<%- case tags['Name'] -%>
+	<%- when /^prod.corp-site/ -%>
+	ProxyCommand ssh -W %h:%p prod.ssh.corp-site
+	<%- when /^stage.pop/ -%>
+	ProxyCommand ssh -W %h:%p stage.pop.ssh
+	<%- when /^prod.pop/ -%>
+	ProxyCommand ssh -W %h:%p prod.pop.ssh
+	<%- when /^stage/ -%>
 	ProxyCommand ssh -W %h:%p stage.ssh
-<%- end -%>
-<%- if tags['Name'] =~ /prod\.(?!ssh)/ -%>
+	<%- when /^prod/ -%>
 	ProxyCommand ssh -W %h:%p prod.ssh
+	<%- end -%>
 <%- end -%>
 <%- if tags['Name'] =~ /stage\./ -%>
-	IdentityFile ~/.ssh/id_rsa.appcm_dev.pub
+	IdentityFile ~/.ssh/id_rsa.appcm_dev
+	User ec2-user
 <%- end -%>
 <%- if tags['Name'] =~ /prod\./ -%>
-	IdentityFile ~/.ssh/id_rsa.appcm_prod.pub
+	IdentityFile ~/.ssh/id_rsa.appcm_prod
+	User ec2-user
 <%- end -%>
 END
