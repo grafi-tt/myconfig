@@ -1,18 +1,13 @@
 # swap Win and Alt
-mod windows += LAlt
-mod alt -= LAlt
+
+mod alt += LWin RWin
+mod windows -= LWin RWin
 key *LAlt = *LWin
-
-mod alt += LWin
-mod windows -= LWin
-key *LWin = LAlt
-
-mod windows += RAlt
-mod alt -= RAlt
 key *RAlt = *RWin
 
-mod alt += RWin
-mod windows -= RWin
-key *RWin = RAlt
+mod windows += LAlt RAlt
+mod alt -= LAlt RAlt
+key *LWin = *LAlt
+key *RWin = *RAlt
 
 define SwapWinAlt
