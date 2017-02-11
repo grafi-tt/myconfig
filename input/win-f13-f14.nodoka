@@ -10,3 +10,5 @@ else
 	key W-LWin = C-S-F11
 	key W-RWin = C-S-F12
 endif
+
+define WinF13F14

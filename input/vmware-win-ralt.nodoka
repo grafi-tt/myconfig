@@ -1,14 +1,26 @@
 window VMWare /(vmplayer|vmware-vmx)\.exe:VMPlayerFrame:VMWindow/ : Global
 	if ( SwapWinAlt )
-		mod windows -= LAlt RAlt
-		mod alt += LAlt RAlt
 		key *Rwin = *LAlt
 		key *LAlt = *RAlt
 		key *RAlt = *RAlt
+		if ( WinF13F14 )
+			mod alt += !!LAlt !!RAlt
+			key A-LAlt = C-S-F11
+			key A-RAlt = C-S-F12
+		else
+			mod alt += LAlt RAlt
+		endif
+		mod windows -= LAlt RAlt
 	else
-		mod windows -= LWin RWin
-		mod alt += LWin RWin
 		key *RAlt = *LAlt
 		key *LWin = *RAlt
 		key *RWin = *RAlt
+		if ( WinF13F14 )
+			mod alt += !!LWin !!RWin
+			key A-LWin = C-S-F11
+			key A-RWin = C-S-F12
+		else
+			mod alt += LWin RWin
+		endif
+		mod windows -= LWin RWin
 	endif
