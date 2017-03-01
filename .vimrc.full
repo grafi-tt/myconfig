@@ -41,6 +41,7 @@ NeoBundle 'def-lkb/vimbufsync'
 NeoBundle 'the-lambda-church/coquille'
 NeoBundle 'derekelkins/agda-vim'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'rust-lang/rust.vim'
 
 NeoBundleLazy 'kana/vim-vspec'
 
