@@ -3,10 +3,10 @@ window VMWare /(vmplayer|vmware-vmx)\.exe:VMPlayerFrame:VMWindow/ : Global
 		key *Lwin = *RAlt
 		key *LAlt = *LAlt
 		key *RAlt = *LAlt
-		if ( WinF13F14 )
+		if ( WinF13F16 )
 			mod alt += !!LAlt !!RAlt
-			key A-LAlt = C-S-F11
-			key A-RAlt = C-S-F12
+			key A-LAlt = ACRefresh
+			key A-RAlt = ACStop
 		else
 			mod alt += LAlt RAlt
 		endif
@@ -15,10 +15,10 @@ window VMWare /(vmplayer|vmware-vmx)\.exe:VMPlayerFrame:VMWindow/ : Global
 		key *LAlt = *RAlt
 		key *LWin = *LAlt
 		key *RWin = *LAlt
-		if ( WinF13F14 )
+		if ( WinF13F16 )
 			mod alt += !!LWin !!RWin
-			key A-LWin = C-S-F11
-			key A-RWin = C-S-F12
+			key A-LWin = ACRefresh
+			key A-RWin = ACStop
 		else
 			mod alt += LWin RWin
 		endif

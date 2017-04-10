@@ -1,3 +1,3 @@
 ! map <FK13> and <FK14> to "F13" and "F14"
 keycode 191 = F13
-keycode 192 = F14
+keycode 194 = F16

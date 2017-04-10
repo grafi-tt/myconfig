@@ -1,5 +1,5 @@
 status	key	command
-Composition	Ctrl Shift F11	CancelAndIMEOff
+Composition	F13	CancelAndIMEOff
 Composition	Ctrl [	Cancel
 Composition	Ctrl ;	ConvertToHalfAlphanumeric
 Composition	Ctrl g	Delete
@@ -28,7 +28,7 @@ Composition	Space	Convert
 Composition	Tab	PredictAndConvert
 Composition	Left	MoveCursorLeft
 Composition	Right	MoveCursorRight
-Conversion	Ctrl Shift F11	CancelAndIMEOff
+Conversion	F13	CancelAndIMEOff
 Conversion	Ctrl [	Cancel
 Conversion	Ctrl ;	ConvertToHalfAlphanumeric
 Conversion	Ctrl h	Cancel
@@ -62,8 +62,8 @@ Conversion	Shift Left	SegmentFocusLeft
 Conversion	Shift Right	SegmentFocusRight
 Conversion	Up	ConvertPrev
 Conversion	Down	ConvertNext
-DirectInput	Ctrl Shift F12	IMEOn
-Precomposition	Ctrl Shift F11	CancelAndIMEOff
+DirectInput	F16	IMEOn
+Precomposition	F13	CancelAndIMEOff
 Precomposition	F10	ToggleAlphanumericMode
 Precomposition	Ctrl F7	LaunchWordRegisterDialog
 Precomposition	Ctrl F12	LaunchConfigDialog
