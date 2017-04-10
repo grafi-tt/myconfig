@@ -1,0 +1,4 @@
+remove Mod1 = Alt_L
+add Mod4 = Alt_L
+keysym XF86Reload = F13
+keysym Cancel = F16
