@@ -16,8 +16,6 @@ set iminsert=1 imsearch=-1
 nnoremap <Space>s :<C-U>shell<CR>
 
 "" edit
-set digraph
-
 set backspace=indent,eol,start
 set smarttab
 set autoindent noexpandtab
