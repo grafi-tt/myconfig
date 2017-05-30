@@ -1,10 +1,20 @@
 "
+" isGentoo
+"
+function! s:isGentoo()
+  redir => ver
+  silent execute ver
+  redir END
+  return stridx(ver, "Gentoo") != 0
+endfunction
+
+"
 " Plugins
 "
 let g:myvimruntime=split(&runtimepath, ',')[0]
 if has('vim_starting')
-    execute 'set runtimepath+='.g:myvimruntime.'/vim-filetype-haskell'
-    execute 'set runtimepath+='.g:myvimruntime.'/bundle/neobundle.vim'
+  execute 'set runtimepath+='.g:myvimruntime.'/vim-filetype-haskell'
+  execute 'set runtimepath+='.g:myvimruntime.'/bundle/neobundle.vim'
 endif
 
 call neobundle#begin(expand(g:myvimruntime.'/bundle/'))
@@ -34,6 +44,9 @@ NeoBundle 'tpope/vim-surround'
 
 NeoBundle 'vim-scripts/sudo.vim'
 
+if !s:isGentoo()
+  NeoBundle 'gentoo/gentoo-syntax'
+endif
 NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
