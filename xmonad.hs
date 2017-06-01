@@ -17,18 +17,22 @@ main = xmonad kde4Config
   , layoutHook = myLayoutHook
   }
 
-myKeys conf@(XConfig {modMask = modm}) = let_z_q . let_q_p $ keys kde4Config conf
-  where let_q_p = M.update (const $ M.lookup (modm, xK_p) $ keys kde4Config conf) (modm, xK_q)
-        let_z_q = M.update (const $ M.lookup (modm, xK_q) $ keys kde4Config conf) (modm, xK_z)
+myKeys conf@(XConfig {modMask = modm}) = let_q_p . let_r_q $ keys kde4Config conf
+  where let_r_q keyMap = M.update (const $ M.lookup (modm, xK_q) $ keyMap) (modm, xK_r) keyMap
+        let_q_p keyMap = M.update (const $ M.lookup (modm, xK_p) $ keyMap) (modm, xK_q) keyMap
 
 myLayoutHook = smartBorders $ layoutHook kde4Config
 
 myManageHook = composeAll . concat $
   [ [ className =? c --> doFloat                       | c <- myFloats ]
+  , [ className =? c --> doF (W.shift "1")             | c <- mailApps ]
   , [ className =? c --> doF (W.shift "2")             | c <- webApps ]
-  , [ className =? c --> doF (W.shift "3")             | c <- ircApps ]
+  , [ className =? c --> doF (W.shift "3")             | c <- terminalApps ]
+  , [ className =? c --> doF (W.shift "4")             | c <- ircApps ]
   , [ isNotification --> doIgnore ]
   ]
   where myFloats      = ["Gimp", "MPlayer", "VirtualBox"]
+        terminalApps  = ["konsole","urxvt"]
+        mailApps      = ["Thunderbird"]
         webApps       = ["Firefox"]
         ircApps       = ["Ksirc"]
