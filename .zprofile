@@ -7,13 +7,5 @@ if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-# virtualenv
-if ! [ -z "${VIRTUAL_ENV}" ]; then
-	PATH="$VIRTUAL_ENV/bin:$PATH"
-	if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT-}" ] ; then
-		PS1="(`basename \"$VIRTUAL_ENV\"`) $PS1"
-	fi
-fi
-
 ## Load per machine config if available.
 [[ -f ~/.zshmod ]] && source ~/.zshmod
