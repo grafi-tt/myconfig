@@ -1,0 +1,52 @@
+require [ "regex", "variables", "fileinto", "envelope" ];
+
+# lists using x-ml-name
+if exists "x-ml-name" {
+        if header :regex "x-ml-name" "([a-z0-9-]+)" {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+        } else {
+                fileinto "list.unknown";
+        }
+        stop;}
+# Mailman & other lists using list-id
+elsif exists "list-id" {
+        if header :regex "list-id" "<([a-z0-9-]+)[.@]" {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+        } else {
+            if header :regex "list-id" "^\\s*<?([a-z0-9-]+)[.@]" {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+            } else {
+                fileinto "list.unknown";
+            }
+        }
+        stop;}
+# Listar and mailman like
+elsif exists "x-list-id" {
+        if header :regex "x-list-id" "<([a-z0-9-]+)\\\\." {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+        } else {
+                fileinto "list.unknown";
+        }
+        stop;}
+# Ezmlm
+elsif exists "mailing-list" {
+        if header :regex "mailing-list" "([a-z0-9-]+)@" {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+        } else {
+                fileinto "list.unknown";
+        }
+        stop;}
+# York lists service
+elsif exists "x-mailing-list" {
+        if header :regex "x-mailing-list" "^\\s*([a-z0-9-]+)@?" {
+                set :lower "listname" "${1}";
+                fileinto "list.${listname}";
+        } else {
+                fileinto "list.unknown";
+        }
+        stop;}
