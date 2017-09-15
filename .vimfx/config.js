@@ -4,6 +4,8 @@ vimfx.set('mode.normal.reload_config_file',          '.');
 // tab and window
 vimfx.set('mode.normal.tab_select_previous',        'b');
 vimfx.set('mode.normal.tab_select_next',            'f');
+vimfx.set('mode.normal.tab_close',                  'd');
+vimfx.set('mode.normal.tab_restore',                'u');
 
 // page navigation
 vimfx.set('mode.normal.scroll_half_page_down',      '<C-d>');
