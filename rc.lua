@@ -48,19 +48,24 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 
 -- This is used later as the default terminal and editor to run.
-terminal = "konsole"
-if os.execute("which " .. terminal .. " > /dev/null") ~= 0 then
-	terminal = "urxvt"
+local terminals = {"konsole", "urxvt", "xterm"}
+local terminal = terminals[#terminals]
+for i = 1, #terminals - 1 do
+	if os.execute("which " .. terminals[i] .. " > /dev/null") == 0 then
+		terminal = terminals[i]
+		break
+	end
 end
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
+
+local editor = os.getenv("EDITOR") or "nano"
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -100,30 +105,27 @@ end
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-	{ "hotkeys", function () return false, hotkeys_popup.show_help end},
-	{ "manual", terminal .. " -e man awesome" },
-	{ "edit config", editor_cmd .. ' ' .. awesome.conffile },
-	{ "restart", awesome.restart },
-	{ "quit", function () awesome.quit() end},
+local mymainmenu = awful.menu {
+	items = {
+		{"quit", function () awesome.quit() end},
+		{"restart", awesome.restart},
+		{"edit config", editor_cmd .. ' ' .. awesome.conffile},
+		{"manual", terminal .. " -e man awesome"},
+		{"hotkeys", function () return false, hotkeys_popup.show_help end},
+	}
 }
 
-mymainmenu = awful.menu({
-	items = {
-		{ "awesome", myawesomemenu, beautiful.awesome_icon },
-		{ "open terminal", terminal },
-	}
-})
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-									 menu = mymainmenu })
+local mylauncher = awful.widget.launcher {
+	image = beautiful.awesome_icon,
+	menu = mymainmenu,
+}
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -131,24 +133,24 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-	awful.button({ }, 1, function (t) t:view_only() end),
-	awful.button({ modkey }, 1, function (t)
+	awful.button({}, 1, function (t) t:view_only() end),
+	awful.button({modkey}, 1, function (t)
 		if client.focus then
 			client.focus:move_to_tag(t)
 		end
 	end),
-	awful.button({ }, 3, awful.tag.viewtoggle),
-	awful.button({ modkey }, 3, function (t)
+	awful.button({}, 3, awful.tag.viewtoggle),
+	awful.button({modkey}, 3, function (t)
 		if client.focus then
 			client.focus:toggle_tag(t)
 		end
 	end),
-	awful.button({ }, 4, function (t) awful.tag.viewnext(t.screen) end),
-	awful.button({ }, 5, function (t) awful.tag.viewprev(t.screen) end)
+	awful.button({}, 4, function (t) awful.tag.viewnext(t.screen) end),
+	awful.button({}, 5, function (t) awful.tag.viewprev(t.screen) end)
 )
 
 local tasklist_buttons = gears.table.join(
-	awful.button({ }, 1, function (c)
+	awful.button({}, 1, function (c)
 		if c == client.focus then
 			c.minimized = true
 		else
@@ -164,11 +166,11 @@ local tasklist_buttons = gears.table.join(
 			c:raise()
 		end
 	end),
-	awful.button({ }, 3, client_menu_toggle_fn()),
-	awful.button({ }, 4, function ()
+	awful.button({}, 3, client_menu_toggle_fn()),
+	awful.button({}, 4, function ()
 		awful.client.focus.byidx(1)
 	end),
-	awful.button({ }, 5, function ()
+	awful.button({}, 5, function ()
 		awful.client.focus.byidx(-1)
 	end)
 )
@@ -198,7 +200,7 @@ awful.screen.connect_for_each_screen(function (s)
 	set_wallpaper(s)
 
 	-- Each screen has its own tag table.
-	awful.tag({ '1', '2', '3', '4', '5', '6', '7', '8', '9' }, s, awful.layout.layouts[1])
+	awful.tag({'1', '2', '3', '4', '5', '6', '7', '8', '9'}, s, awful.layout.layouts[1])
 
 	-- Create a promptbox for each screen
 	s.mypromptbox = awful.widget.prompt()
@@ -206,10 +208,10 @@ awful.screen.connect_for_each_screen(function (s)
 	-- We need one layoutbox per screen.
 	s.mylayoutbox = awful.widget.layoutbox(s)
 	s.mylayoutbox:buttons(gears.table.join(
-		awful.button({ }, 1, function () awful.layout.inc( 1) end),
-		awful.button({ }, 3, function () awful.layout.inc(-1) end),
-		awful.button({ }, 4, function () awful.layout.inc( 1) end),
-		awful.button({ }, 5, function () awful.layout.inc(-1) end)
+		awful.button({}, 1, function () awful.layout.inc( 1) end),
+		awful.button({}, 3, function () awful.layout.inc(-1) end),
+		awful.button({}, 4, function () awful.layout.inc( 1) end),
+		awful.button({}, 5, function () awful.layout.inc(-1) end)
 	))
 	-- Create a taglist widget
 	s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
@@ -218,7 +220,7 @@ awful.screen.connect_for_each_screen(function (s)
 	s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s })
+	s.mywibox = awful.wibar({position = "top", screen = s})
 
 	-- Add widgets to the wibox
 	s.mywibox:setup {
@@ -243,9 +245,9 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-	awful.button({ }, 3, function () mymainmenu:toggle() end),
-	awful.button({ }, 4, awful.tag.viewnext),
-	awful.button({ }, 5, awful.tag.viewprev)
+	awful.button({}, 3, function () mymainmenu:toggle() end),
+	awful.button({}, 4, awful.tag.viewnext),
+	awful.button({}, 5, awful.tag.viewprev)
 ))
 -- }}}
 
