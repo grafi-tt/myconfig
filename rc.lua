@@ -105,15 +105,33 @@ end
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-local mymainmenu = awful.menu {
-	items = {
-		{"quit", function () awesome.quit() end},
-		{"restart", awesome.restart},
-		{"edit config", editor_cmd .. ' ' .. awesome.conffile},
-		{"manual", terminal .. " -e man awesome"},
-		{"hotkeys", function () return false, hotkeys_popup.show_help end},
-	}
+local quitmenu = {
+	{"shutdown", function()
+		if os.execute('which systemctl > /dev/null') == 0 then
+			os.execute('systemctl poweroff')
+		else
+			os.execute('sudo shutdown -h now')
+		end
+	end},
+	{"reboot", function()
+		if os.execute('which systemctl > /dev/null') == 0 then
+			os.execute('systemctl reboot')
+		else
+			os.execute('sudo reboot')
+		end
+	end
+	},
+	{"logout", function () awesome.quit() end},
 }
+
+local mainmenu = {
+	{"quit", quitmenu},
+	{"edit config", editor_cmd .. ' ' .. awesome.conffile},
+	{"manual", terminal .. " -e man awesome"},
+	{"hotkeys", function () return false, hotkeys_popup.show_help end},
+}
+
+local mymainmenu = awful.menu {items = mainmenu}
 
 local mylauncher = awful.widget.launcher {
 	image = beautiful.awesome_icon,
