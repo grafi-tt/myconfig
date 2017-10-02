@@ -1,15 +1,15 @@
 " font
 if has('win32')
-  set guifont=M+\ 1m\ regular:h10
-  if has('directx')
-    set renderoptions=type:directx,gamma:1.6,geom:0,contrast:0,renmode:5,taamode:2
-  endif
+	set guifont=M+_1m:h10:cSHIFTJIS:qDRAFT
+	if has('directx')
+		set renderoptions=type:directx,gamma:1.6,geom:0,contrast:0,renmode:5,taamode:2
+	endif
 elseif has('gui_macvim')
-  set guifont=M+\ 1m\ regular:h12
+	set guifont=M+\ 1m\ regular:h12
 elseif has('gui_gtk2')
-  set guifont=M+\ 1m\ regular\ 9
+	set guifont=M+\ 1m\ regular\ 9
 elseif has('xfontset')
-  set guifontset=a14,r14,k14
+	set guifontset=a14,r14,k14
 endif
 
 " window
