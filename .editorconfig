@@ -41,5 +41,5 @@ indent_size = 2
 [*.{ps1,bat}]
 end_of_line = crlf
 
-[.hledger.journal]
+[*hledger.journal*]
 indent_style = space
