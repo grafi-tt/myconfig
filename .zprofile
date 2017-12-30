@@ -14,6 +14,6 @@ fi
 if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /dev/null; then
 	export WORKON_HOME=$HOME/.virtualenvs
 	export PROJECT_HOME=$HOME
-	export VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
-	source /usr/bin/virtualenvwrapper_lazy.sh
+	export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+	source "$(which virtualenvwrapper_lazy.sh)"
 fi
