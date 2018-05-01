@@ -19,7 +19,7 @@ endif
 
 call neobundle#begin(expand(g:myvimruntime.'/bundle/'))
 
-NeoBundle 'Shougo/vimproc', {
+NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
       \     'windows' : g:myvimruntime.'/vimproc.bat',
       \     'cygwin' : 'make -f make_cygwin.mak',
