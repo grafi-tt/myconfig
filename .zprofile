@@ -4,7 +4,7 @@ export LD_LIBRARY_PATH="/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LI
 
 # rubygems
 if which ruby >/dev/null && which gem >/dev/null; then
-	PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+	PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
 ## Load per machine config if available.
