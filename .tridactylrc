@@ -1,0 +1,3 @@
+bind e hint
+bind f tabnext_gt
+bind b tabprev
