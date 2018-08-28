@@ -47,7 +47,7 @@ NeoBundle 'vim-scripts/sudo.vim'
 if !s:isGentoo()
   NeoBundle 'gentoo/gentoo-syntax'
 endif
-NeoBundle 'eagletmt/ghcmod-vim'
+"NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
 NeoBundle 'def-lkb/vimbufsync'
