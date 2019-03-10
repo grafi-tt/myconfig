@@ -53,7 +53,7 @@
   }{}
 
   % 卒論発表前日に書いたアレ
-  \newcommand{\tartantemplate}[1][0.8\paperwidth]{%
+  \newcommand{\tartantemplate}[1][0.0]{%
     \newcommand{\checkdraw}[3][]{%
       \draw[##1, step=##2, xshift=+##3, yshift=+##3] (p1) grid (p2);
       \draw[##1, step=##2, xshift=-##3, yshift=+##3] (p1) grid (p2);
@@ -91,16 +91,17 @@
 
         % white lace
         \begin{scope}
-          \edef\lacewidth{0.5*#1}
+          \edef\lacewidthl{-0.4*\paperwidth+#1*\paperwidth}
+          \edef\lacewidthr{0.4*\paperwidth+#1*\paperwidth}
           \edef\lacecount{16}
 
-          \xdef\grafibeamer@lace{(\lacewidth, \paperheight) --}
+          \xdef\grafibeamer@lace{($(\lacewidthr, \paperheight)$) --}
           \foreach \i in {1, ..., \lacecount} {
-            \xdef\grafibeamer@lace{\grafibeamer@lace ($(\lacewidth, \paperheight-2*\paperheight*\i/\lacecount)$) --}
+            \xdef\grafibeamer@lace{\grafibeamer@lace ($(\lacewidthr, \paperheight-2*\paperheight*\i/\lacecount)$) --}
           }
-          \xdef\grafibeamer@lace{\grafibeamer@lace (-\lacewidth, -\paperwidth) --}
+          \xdef\grafibeamer@lace{\grafibeamer@lace ($(\lacewidthl, -\paperheight)$) --}
           \foreach \i in {1, ..., \lacecount} {
-            \xdef\grafibeamer@lace{\grafibeamer@lace ($(-\lacewidth, 2*\paperheight*\i/\lacecount-\paperheight)$) --}
+            \xdef\grafibeamer@lace{\grafibeamer@lace ($(\lacewidthl, 2*\paperheight*\i/\lacecount-\paperheight)$) --}
           }
           \fill [fill=white, blur shadow={shadow blur steps=5}]
             decorate{decorate{decorate{\grafibeamer@lace cycle}}};
