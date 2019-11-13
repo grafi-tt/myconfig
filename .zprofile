@@ -17,3 +17,7 @@ if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /
 	export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
 	source "$(which virtualenvwrapper_lazy.sh)"
 fi
+
+# Gcloud
+[[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/path.zsh.inc"
+[[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/completion.zsh.inc"
