@@ -1,6 +1,6 @@
 export PATH="${HOME}/.local/bin:$PATH"
-export LD_LIBRARY_PATH="/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LIBRARY_PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+#export LD_LIBRARY_PATH="/opt/intel/mkl/lib/intel64:/opt/intel/lib/intel64:$LD_LIBRARY_PATH"
 
 # rubygems
 if which ruby >/dev/null && which gem >/dev/null; then
