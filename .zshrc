@@ -45,7 +45,7 @@ autoload colors; colors
 # "<user>:<current dir:cyan>% "
 PROMPT="$USER:%{$fg[cyan]%}%~%{$reset_color%}%% "
 # If ssh-connected, push "<host:white> "
-[[ -n "${REMOTEHOST}${SSH_CONNECTION}" ]] &&
+[[ -n "${REMOTEHOST}${SSH_CONNECTION}${KUBERNETES_SERVICE_HOST}" ]] &&
 	PROMPT="%{${fg[white]}%}${HOST%%.*}%{$reset_color%} ${PROMPT}"
 
 ## History
