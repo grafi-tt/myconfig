@@ -49,6 +49,13 @@ PROMPT="$USER:%{$fg[cyan]%}%~%{$reset_color%}%% "
 	PROMPT="%{${fg[white]}%}${HOST%%.*}%{$reset_color%} ${PROMPT}"
 
 ## History
+function zshaddhistory() {
+    emulate -L zsh
+    if [[ $1 = "shred"* ]]; then
+        return 1
+    fi
+}
+
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
