@@ -1,16 +1,6 @@
 ## vi Keybinding
 bindkey -v
 
-## Commands
-# aliases
-alias ls='ls --color=auto' # should be overridden on non-GNU env
-alias grep='grep --color=auto' # should be overridden on non-GNU env
-alias rol='ruby -p -e'
-alias tmux='tmux -2'
-alias gvimr='gvim --remote-tab-silent'
-# home bin
-export PATH=~/bin:$PATH
-
 ## Completion
 autoload -U compinit; compinit
 # Search sbin when sudoing.
@@ -46,7 +36,7 @@ autoload colors; colors
 PROMPT="$USER:%{$fg[cyan]%}%~%{$reset_color%}%% "
 # If ssh-connected, push "<host:white> "
 [[ -n "${REMOTEHOST}${SSH_CONNECTION}${KUBERNETES_SERVICE_HOST}" ]] &&
-	PROMPT="%{${fg[white]}%}${HOST%%.*}%{$reset_color%} ${PROMPT}"
+    PROMPT="%{${fg[white]}%}${HOST%%.*}%{$reset_color%} ${PROMPT}"
 
 ## History
 function zshaddhistory() {
@@ -73,4 +63,35 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-alias yanaconda="source $HOME/miniconda3/bin/activate"
+## Commands
+# aliases
+alias ls='ls --color=auto' # should be overridden on non-GNU env
+alias grep='grep --color=auto' # should be overridden on non-GNU env
+alias rol='ruby -p -e'
+alias tmux='tmux -2'
+alias gvimr='gvim --remote-tab-silent'
+
+# home bin
+export PATH=~/bin:$PATH
+export PATH="${HOME}/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# rubygems
+if which ruby >/dev/null && which gem >/dev/null; then
+    export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
+
+# virtualenvwrapper
+if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /dev/null; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME
+    export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+    source "$(which virtualenvwrapper_lazy.sh)"
+fi
+
+# Gcloud
+[[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/path.zsh.inc"
+[[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/completion.zsh.inc"
+
+## Load per machine config if available.
+[[ -f ~/.zshmod ]] && source ~/.zshmod
