@@ -17,7 +17,7 @@ setopt mark_dirs
 
 ## interaction
 # opts
-setopt auto_pushd correct interactivecomments nobeep
+setopt autocd auto_pushd correct interactivecomments nobeep
 # Command line stack.
 bindkey '^T' push-line-or-edit
 
