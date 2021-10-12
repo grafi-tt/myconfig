@@ -16,18 +16,10 @@ setopt mark_dirs
 #setopt extended_glob
 
 ## interaction
-# Try to correct the spelling of commands.
-setopt correct
-# No beep on error.
-setopt nobeep
+# opts
+setopt auto_pushd correct interactivecomments nobeep
 # Command line stack.
 bindkey '^T' push-line-or-edit
-
-## Chdir
-# If a command is issued that can't be executed as a normal command, and the command is the name of a directory, perform the cd command to that directory.
-setopt auto_cd
-# Make cd push the old directory onto the directory stack.
-setopt auto_pushd
 
 ## Prompt
 # color
