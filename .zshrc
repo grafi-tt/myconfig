@@ -41,11 +41,8 @@ function zshaddhistory() {
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-# This option both imports new commands from the history file, and also causes your typed commands to be appended to the history file
-# (the latter is like specifying INC_APPEND_HISTORY, which should be turned off if this option is in effect).
-setopt share_history
-# If a new command line being added to the history list duplicates an older one, the older command is removed from the list (even if it is not the previous event).
-setopt hist_ignore_all_dups
+setopt share_history hist_ignore_all_dups hist_ignore_space hist_reduce_blanks
+
 # Search history when the cursor is on the end.
 #bindkey "^P" history-incremental-search-backward
 #bindkey "^N" history-incremental-search-forward
