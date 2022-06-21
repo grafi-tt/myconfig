@@ -41,7 +41,7 @@ function zshaddhistory() {
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt share_history hist_ignore_all_dups hist_ignore_space hist_reduce_blanks
+setopt share_history hist_ignore_all_dups hist_ignore_space
 
 # Search history when the cursor is on the end.
 #bindkey "^P" history-incremental-search-backward
