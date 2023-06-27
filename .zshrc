@@ -70,17 +70,18 @@ if which ruby >/dev/null && which gem >/dev/null; then
     export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-# virtualenvwrapper
-if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /dev/null; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export PROJECT_HOME=$HOME
-    export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
-    source "$(which virtualenvwrapper_lazy.sh)"
-fi
-
 # Gcloud
 [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/path.zsh.inc"
 [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]] && source "${HOME}/google-cloud-sdk/completion.zsh.inc"
 
 ## Load per machine config if available.
 [[ -f ~/.zshmod ]] && source ~/.zshmod
+
+# virtualenvwrapper
+[[ -z "${VIRTUALENVWRAPPER_PYTHON}" ]] && export VIRTUALENVWRAPPER_PYTHON=$(which python)
+if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /dev/null; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME
+    export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+    source "$(which virtualenvwrapper_lazy.sh)"
+fi
