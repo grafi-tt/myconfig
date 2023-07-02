@@ -78,7 +78,7 @@ fi
 [[ -f ~/.zshmod ]] && source ~/.zshmod
 
 # virtualenvwrapper
-[[ -z "${VIRTUALENVWRAPPER_PYTHON}" ]] && export VIRTUALENVWRAPPER_PYTHON=$(which python)
+[[ -z "${VIRTUALENVWRAPPER_PYTHON}" ]] && export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /dev/null; then
     export WORKON_HOME=$HOME/.virtualenvs
     export PROJECT_HOME=$HOME
