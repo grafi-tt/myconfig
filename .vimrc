@@ -1,59 +1,55 @@
-"
-" Essential Vim settings (aiming to <100 lines)
-"
 augroup VimRC
   autocmd!
 augroup END
 
-"" general
-set wildmenu
-set visualbell
-set modeline
-set iminsert=1 imsearch=-1
-
-"" keymap
-" shell
-nnoremap <Space>s :<C-U>shell<CR>
-
-"" edit
+" set neovim default
+set autoindent
 set backspace=indent,eol,start
+set incsearch
+set laststatus=2
+set modeline
+set showcmd
 set smarttab
-set autoindent noexpandtab
-set tabstop=4 shiftwidth=4 softtabstop=0
-set cinoptions=:0 "disable idnent of case label
+set wildmenu
+
+set t_Co=256
+set hlsearch
+syntax on
+
+" ui
+set number
+set scrolloff=2
+set visualbell
+set list
+set listchars=tab:>-,trail:-,nbsp:+,extends:>,precedes:<
+
+" edit
+nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
+set noexpandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=0
 " input soft tab by S-Tab
 inoremap <S-Tab> <C-R>=repeat(' ', &shiftwidth - (virtcol('.') - 1) % &shiftwidth)<CR>
 
-"" appearance
-set noruler
-set showcmd
-set laststatus=2
-set number
-set list listchars=tab:>-,trail:-,extends:>,precedes:<
-set scrolloff=2
-
-set t_Co=256
-syntax on
-set hlsearch
-nnoremap <silent> <ESC><ESC> :nohlsearch<CR>
-colorscheme desert
-
-" status line (guessed default: %t\ %m%h%r%=%l,%c%V\ %P)
-" [1] sample.txt [type][encoding:format][+][RO]    1,1-1    All
-set statusline=[%n]\ %t\ %y%{GetStatusEx()}%m%r%=%l,%c%V\ \ \ \ %P
-function! GetStatusEx()
-  let str = &fileformat
-  if has("multi_byte") && &fileencoding != ""
-    let str = &fileencoding . ":" . str
-  endif
-  let str = "[" . str . "]"
-  return str
-endfunction
-
-"" search
-set noignorecase
-set wrapscan
-set incsearch
+" space keymap
+nnoremap <Space>s :<C-U>shell<CR>
+nnoremap <Space>t :<C-U>split<CR>
+nnoremap <Space>v :<C-U>vsplit<CR>
+nnoremap <Space>h <C-W>h
+nnoremap <Space>j <C-W>j
+nnoremap <Space>k <C-W>k
+nnoremap <Space>l <C-W>l
+nnoremap <Space>H <C-W>H
+nnoremap <Space>J <C-W>J
+nnoremap <Space>K <C-W>K
+nnoremap <Space>L <C-W>L
+nnoremap <Space>r <C-W>r
+nnoremap <Space>= <C-W>=
+nnoremap <Space>> <C-W>>
+nnoremap <Space>< <C-W><
+nnoremap <Space>+ <C-W>+
+nnoremap <Space>- <C-W>-
 
 "" encoding
 if has("multi_byte")
@@ -69,6 +65,18 @@ endif
 
 set fileformat=unix
 set fileformats=unix,dos
+
+" status line (guessed default: %t\ %m%h%r%=%l,%c%V\ %P)
+" [1] sample.txt [type][encoding:format][+][RO]    1,1-1    All
+set statusline=[%n]\ %t\ %y%{GetStatusEx()}%m%r%=%l,%c%V\ \ \ \ %P
+function! GetStatusEx()
+  let str = &fileformat
+  if has("multi_byte") && &fileencoding != ""
+    let str = &fileencoding . ":" . str
+  endif
+  let str = "[" . str . "]"
+  return str
+endfunction
 
 "" autocmd
 " open QuickFix Automatically
