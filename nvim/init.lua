@@ -61,6 +61,7 @@ if vim.fn.isdirectory(packer_path) == 0 then
     end
     vim.api.nvim_del_user_command('PackerInstall')
     vim.cmd.packadd('packer.nvim')
+    vim.opt.runtimepath = vim.o.runtimepath .. ',' .. packer_path
     setup_packer()
   end, { nargs = 0 })
   return
