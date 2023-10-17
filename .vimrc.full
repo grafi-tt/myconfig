@@ -13,7 +13,6 @@ endfunction
 "
 let g:myvimruntime=split(&runtimepath, ',')[0]
 if has('vim_starting')
-  execute 'set runtimepath+='.g:myvimruntime.'/vim-filetype-haskell'
   execute 'set runtimepath+='.g:myvimruntime.'/bundle/neobundle.vim'
 endif
 
@@ -28,7 +27,6 @@ NeoBundle 'Shougo/vimproc.vim', {
       \     },
       \ }
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neosnippet.vim'
 NeoBundle 'Shougo/neosnippet-snippets'
 
@@ -47,16 +45,6 @@ NeoBundle 'vim-scripts/sudo.vim'
 if !s:isGentoo()
   NeoBundle 'gentoo/gentoo-syntax'
 endif
-"NeoBundle 'eagletmt/ghcmod-vim'
-NeoBundle 'tikhomirov/vim-glsl'
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
-NeoBundle 'def-lkb/vimbufsync'
-NeoBundle 'the-lambda-church/coquille'
-NeoBundle 'derekelkins/agda-vim'
-NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'rust-lang/rust.vim'
-
-NeoBundleLazy 'kana/vim-vspec'
 
 call neobundle#end()
 
