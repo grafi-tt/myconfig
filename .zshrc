@@ -85,3 +85,16 @@ if which virtualenvwrapper.sh > /dev/null && which virtualenvwrapper_lazy.sh > /
     export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
     source "$(which virtualenvwrapper_lazy.sh)"
 fi
+
+# CTRL-D resumes neovim
+function resume_nvim() {
+    emulate -L zsh
+    if jobs %nvim 2&>1 >/dev/null; then
+        fg %nvim
+    else
+        exit
+    fi
+}
+zle -N resume_nvim
+bindkey "^D" resume_nvim
+setopt ignoreeof
