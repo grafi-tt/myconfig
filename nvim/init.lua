@@ -47,6 +47,7 @@ local function setup_packer()
     use {'Shatur/neovim-ayu', commit = '76dbf939b38e03ac5f9bd711ab3e434999f715c8'}
     use {'neovim/nvim-lspconfig', commit = 'e49b1e90c1781ce372013de3fa93a91ea29fc34a'}
     use {'jamessan/vim-gnupg', commit = 'f9b608f29003dfde6450931dc0f495a912973a88'}
+    use {'gentoo/gentoo-syntax', commit = '865f01aa04434838f0ed1915734e2200759d925b'}
   end)
 end
 -- if packer not installed, define install command and bail out
