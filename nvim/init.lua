@@ -8,7 +8,7 @@ vim.opt.scrolloff = 2
 vim.opt.visualbell = true
 
 -- edit
-vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>')
+vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', { silent = true })
 vim.opt.expandtab = false
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 0
@@ -104,12 +104,29 @@ ayu.colorscheme()
 
 -- lsp
 local lspconfig = require('lspconfig')
-lspconfig.clangd.setup {}
+lspconfig.clangd.setup {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.semanticTokensProvider = nil
+  end
+}
 lspconfig.pyright.setup {
   root_dir = lspconfig.util.root_pattern('setup.py', 'pyrightconfig.json', '.git'),
 }
 
+local function toggle_diagnostic()
+  if vim.b.enable_diagnostic then
+    vim.api.nvim_echo({{'Disabling diagnostics...'}}, false, {})
+    vim.schedule(function() vim.diagnostic.disable(0) end)
+    vim.b.enable_diagnostic = false
+  else
+    vim.api.nvim_echo({{'Enabling diagnostics...'}}, false, {})
+    vim.schedule(function() vim.diagnostic.enable(0) end)
+    vim.b.enable_diagnostic = true
+  end
+end
+
 -- global mappings from nvim-lspconfig example
+vim.keymap.set('n', '<Leader>d', toggle_diagnostic)
 vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
@@ -119,6 +136,9 @@ vim.keymap.set('n', '<Leader>l', vim.diagnostic.setloclist)
 vim.api.nvim_create_autocmd({'LspAttach'}, {
   group = 'VimRC',
   callback = function(ev)
+    if not vim.b.enable_diagnostic then
+      vim.diagnostic.disable(0)
+    end
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     local opts = { buffer = ev.buf }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
