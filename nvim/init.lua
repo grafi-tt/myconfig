@@ -6,6 +6,8 @@ vim.opt.listchars = { tab = '>-', trail = '-', nbsp = '+', extends = '>', preced
 vim.opt.number = true
 vim.opt.scrolloff = 2
 vim.opt.visualbell = true
+-- allow C/C++ syntax using curly bracket as index expression
+vim.g.c_no_curly_error = 1
 
 -- edit
 vim.keymap.set('n', '<ESC><ESC>', ':nohlsearch<CR>', { silent = true })

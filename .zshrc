@@ -98,3 +98,7 @@ function resume_nvim() {
 zle -N resume_nvim
 bindkey "^D" resume_nvim
 setopt ignoreeof
+
+# fzf
+[[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+[[ -f /usr/share/zsh/site-functions/_fzf ]] && source /usr/share/zsh/site-functions/_fzf
