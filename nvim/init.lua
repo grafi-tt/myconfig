@@ -50,6 +50,7 @@ local function setup_packer()
     use {'neovim/nvim-lspconfig', commit = 'e49b1e90c1781ce372013de3fa93a91ea29fc34a'}
     use {'jamessan/vim-gnupg', commit = 'f9b608f29003dfde6450931dc0f495a912973a88'}
     use {'gentoo/gentoo-syntax', commit = '865f01aa04434838f0ed1915734e2200759d925b'}
+    use {'ibhagwan/fzf-lua', commit = '305c60c39fdc8cc536cc330150eebf04fa351249'}
   end)
 end
 -- if packer not installed, define install command and bail out
@@ -162,3 +163,8 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
     end, opts)
   end,
 })
+
+-- fzf-lua
+local fzflua = require('fzf-lua')
+vim.keymap.set('n', '<Space>f', fzflua.files)
+vim.keymap.set('n', '<Space>b', fzflua.buffers)
