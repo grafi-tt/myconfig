@@ -156,7 +156,7 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
     end, opts)
     vim.keymap.set('n', '<Space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<Space>R', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<Space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set({'n', 'v'}, '<Space>ca', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<Leader>f', function()
       vim.lsp.buf.format { async = true }
@@ -168,3 +168,22 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
 local fzflua = require('fzf-lua')
 vim.keymap.set('n', '<Space>f', fzflua.files)
 vim.keymap.set('n', '<Space>b', fzflua.buffers)
+
+-- gnupg
+local function pwgen(len)
+  len = len or 16
+  local out = vim.fn.system({'pwgen', '-s', len, 1})
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_err_writeln(out)
+    return
+  end
+  return out:gsub('%s', '')
+end
+
+vim.api.nvim_create_autocmd('User', {
+  group = 'VimRC',
+  pattern = 'GnuPG',
+  callback = function(ev)
+    vim.keymap.set('i', '<C-K>', pwgen, { expr = true, buffer = ev.buf })
+  end,
+})
