@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+import json
+import os
+import subprocess
+import sys
+import time
+
+
+def run_pacmd(*args, is_pactl=False):
+    cmd = ["pactl" if is_pactl else "pacmd", *args]
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    if p.stdout:
+        print("+ " + " ".join(cmd), file=sys.stderr)
+        sys.stderr.write(p.stdout)
+        p.returncode = 1
+    p.check_returncode()
+
+def get_codec(dev):
+    p = subprocess.run(["pactl", "-f", "json", "list", "cards"], capture_output=True, text=True)
+    j = json.loads(p.stdout)
+    for card in j:
+        if card["name"] == f"bluez_card.{dev}":
+            return card["properties"]["bluetooth.codec"]
+    else:
+        sys.exit(1)
+
+def set_a2dp_profile(model, dev):
+    print("Setting a2dp profile...")
+    time.sleep(2)
+    run_pacmd("set-card-profile", f"bluez_card.{dev}", "a2dp_sink")
+    time.sleep(1)
+    codec = get_codec(dev)
+    if model == "wh":
+        if codec != "ldac_sq":
+            if codec != "ldac_hq":
+                run_pacmd("send-message", f"/card/bluez_card.{dev}/bluez", "switch-codec", '"ldac_hq"', is_pactl=True)
+            run_pacmd("send-message", f"/card/bluez_card.{dev}/bluez", "switch-codec", '"ldac_sq"', is_pactl=True)
+    else:
+        if codec != "sbc_xq_552":
+            run_pacmd("send-message", f"/card/bluez_card.{dev}/bluez", "switch-codec", '"sbc_xq_552"', is_pactl=True)
+    run_pacmd("set-default-sink", f"bluez_sink.{dev}.a2dp_sink")
+
+def set_hfp_profile(model, dev):
+    print("Setting handsfree_head_unit profile...")
+    run_pacmd("set-card-profile", f"bluez_card.{dev}", "handsfree_head_unit")
+    time.sleep(1)
+    run_pacmd("set-default-sink", f"bluez_sink.{dev}.handsfree_head_unit")
+
+
+# Load BT_DEVICES constants defined by Plyglot code
+with open(os.environ['HOME'] + '/.zshmod') as f:
+    exec(f.read())
+
+
+if __name__ == "__main__":
+    fn = os.path.basename(__file__)
+    model, profile = fn.split("-")
+    dev = BT_DEVICES[model]
+    padev = dev.replace(':', '_')
+
+    profiles = {"a2dp": set_a2dp_profile, "hfp": set_hfp_profile}
+    try:
+        profiles[profile](model, padev)
+    except Exception:
+        print("Reconnecting bluetooth device...")
+        subprocess.run(["bluetoothctl", "disconnect", dev], check=True)
+        subprocess.run(["bluetoothctl", "connect", dev], check=True)
+        time.sleep(2)
+        profiles[profile](model, padev)
