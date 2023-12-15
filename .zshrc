@@ -89,7 +89,7 @@ fi
 # CTRL-D resumes neovim
 function resume_nvim() {
     emulate -L zsh
-    if jobs %nvim 2>&1 >/dev/null; then
+    if jobs %nvim >/dev/null 2>&1; then
         fg %nvim
     else
         exit
