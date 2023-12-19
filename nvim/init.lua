@@ -168,7 +168,7 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
 local fzflua = require('fzf-lua')
 vim.keymap.set('n', '<Space>f', fzflua.files)
 vim.keymap.set('n', '<Space>.', function() fzflua.files({ cwd = vim.fn.expand('%:h') }) end)
-vim.keymap.set('n', '<Space>b', fzflua.buffers)
+vim.keymap.set('n', '<Space>b', function() fzflua.buffers({ sort_lastused = false }) end)
 
 -- gnupg
 local function pwgen(len)
