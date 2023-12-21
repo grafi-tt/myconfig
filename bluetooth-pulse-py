@@ -26,9 +26,9 @@ def get_codec(dev):
 
 def set_a2dp_profile(model, dev):
     print("Setting a2dp profile...")
-    time.sleep(2)
     run_pacmd("set-card-profile", f"bluez_card.{dev}", "a2dp_sink")
-    time.sleep(1)
+    time.sleep(0.5)
+    time.sleep(0.5)
     codec = get_codec(dev)
     if model == "wh":
         if codec != "ldac_sq":
@@ -43,7 +43,8 @@ def set_a2dp_profile(model, dev):
 def set_hfp_profile(model, dev):
     print("Setting handsfree_head_unit profile...")
     run_pacmd("set-card-profile", f"bluez_card.{dev}", "handsfree_head_unit")
-    time.sleep(1)
+    time.sleep(0.5)
+    time.sleep(0.5)
     run_pacmd("set-default-sink", f"bluez_sink.{dev}.handsfree_head_unit")
 
 
@@ -65,5 +66,7 @@ if __name__ == "__main__":
         print("Reconnecting bluetooth device...")
         subprocess.run(["bluetoothctl", "disconnect", dev], check=True)
         subprocess.run(["bluetoothctl", "connect", dev], check=True)
-        time.sleep(2)
+        time.sleep(1)
+        time.sleep(1)
+        time.sleep(1)
         profiles[profile](model, padev)
