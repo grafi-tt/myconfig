@@ -6,6 +6,7 @@ vim.opt.listchars = { tab = '>-', trail = '-', nbsp = '+', extends = '>', preced
 vim.opt.number = true
 vim.opt.scrolloff = 2
 vim.opt.visualbell = true
+vim.opt.mouse = ""
 -- allow C/C++ syntax using curly bracket as index expression
 vim.g.c_no_curly_error = 1
 
