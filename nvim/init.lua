@@ -121,11 +121,11 @@ lspconfig.pyright.setup {
 local function toggle_diagnostic()
   if vim.b.enable_diagnostic then
     vim.api.nvim_echo({{'Disabling diagnostics...'}}, false, {})
-    vim.schedule(function() vim.diagnostic.disable(0) end)
+    vim.schedule(function() vim.diagnostic.enable(false, { bufnr = 0}) end)
     vim.b.enable_diagnostic = false
   else
     vim.api.nvim_echo({{'Enabling diagnostics...'}}, false, {})
-    vim.schedule(function() vim.diagnostic.enable(0) end)
+    vim.schedule(function() vim.diagnostic.enable(true, { bufnr = 0}) end)
     vim.b.enable_diagnostic = true
   end
 end
@@ -142,7 +142,7 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
   group = 'VimRC',
   callback = function(ev)
     if not vim.b.enable_diagnostic then
-      vim.diagnostic.disable(0)
+      vim.diagnostic.enable(false, { bufnr = 0})
     end
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     local opts = { buffer = ev.buf }
