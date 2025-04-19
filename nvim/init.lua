@@ -190,3 +190,9 @@ vim.api.nvim_create_autocmd('User', {
     vim.keymap.set('i', '<C-K>', pwgen, { expr = true, buffer = ev.buf })
   end,
 })
+
+-- Copilot
+vim.keymap.set('i', '<C-K>', '<Plug>(copilot-suggest)')
+vim.g.copilot_filetypes = {
+  ['*'] = false,
+}
