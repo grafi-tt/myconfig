@@ -9,11 +9,11 @@ indent_size = 4
 [{Makefile,*.mk}]
 indent_style = tab
 
-[{Rakefile,*.rb}]
+[{Rakefile,Rules,*.rb}]
 indent_style = space
 indent_size = 2
 
-[{Rakefile,*.lua}]
+[*.lua]
 indent_style = space
 indent_size = 2
 
@@ -42,6 +42,10 @@ indent_style = space
 indent_size = 2
 
 [{*.vim,{.gvimrc,.vimrc}*}]
+indent_style = space
+indent_size = 2
+
+[{CMakeLists.txt, *.cmake}]
 indent_style = space
 indent_size = 2
 
