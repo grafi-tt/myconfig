@@ -65,6 +65,7 @@ alias gvimr='gvim --remote-tab-silent'
 export PATH=~/bin:$PATH
 export PATH="${HOME}/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.krew/bin:$PATH"
 
 # rubygems
 if which ruby >/dev/null && which gem >/dev/null; then
