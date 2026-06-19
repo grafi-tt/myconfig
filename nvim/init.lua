@@ -48,11 +48,10 @@ local function setup_packer()
   require('packer').startup(function(use)
     use {'wbthomason/packer.nvim', commit = packer_commit}
     use {'Shatur/neovim-ayu', commit = '76dbf939b38e03ac5f9bd711ab3e434999f715c8'}
-    use {'neovim/nvim-lspconfig', commit = 'e49b1e90c1781ce372013de3fa93a91ea29fc34a'}
-    use {'jamessan/vim-gnupg', commit = 'f9b608f29003dfde6450931dc0f495a912973a88'}
-    use {'gentoo/gentoo-syntax', commit = '865f01aa04434838f0ed1915734e2200759d925b'}
-    use {'ibhagwan/fzf-lua', commit = '305c60c39fdc8cc536cc330150eebf04fa351249'}
-    use {'github/copilot.vim', commit = '5015939f131627a6a332c9e3ecad9a7cb4c2e549'}  -- v1.43.0
+    use {'neovim/nvim-lspconfig', commit = '229b79051b380377664edc4cbd534930154921a1'}  -- v2.10.0
+    use {'gentoo/gentoo-syntax', commit = '1b3a81ec62e5c843245dc431be0fe072add7eca8'}
+    use {'ibhagwan/fzf-lua', commit = 'fea9eedc6894c44d44cbb772a5cd11c93b82d7a1'}
+    use {'github/copilot.vim', commit = 'a12fd5672110c8aa7e3c8419e28c96943ca179be'}  -- v1.59.0
   end)
 end
 -- if packer not installed, define install command and bail out
@@ -108,15 +107,8 @@ ayu.setup {
 ayu.colorscheme()
 
 -- lsp
-local lspconfig = require('lspconfig')
-lspconfig.clangd.setup {
-  on_attach = function(client, bufnr)
-    client.server_capabilities.semanticTokensProvider = nil
-  end
-}
-lspconfig.pyright.setup {
-  root_dir = lspconfig.util.root_pattern('setup.py', 'pyrightconfig.json', '.git'),
-}
+vim.lsp.enable('clangd')
+vim.lsp.enable('pyright')
 
 local function toggle_diagnostic()
   if vim.b.enable_diagnostic then
@@ -163,6 +155,11 @@ vim.api.nvim_create_autocmd({'LspAttach'}, {
     vim.keymap.set('n', '<Leader>f', function()
       vim.lsp.buf.format { async = true }
     end, opts)
+
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client.name == 'clangd' then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
   end,
 })
 
