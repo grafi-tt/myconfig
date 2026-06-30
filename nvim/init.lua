@@ -51,7 +51,7 @@ local function setup_packer()
     use {'neovim/nvim-lspconfig', commit = '229b79051b380377664edc4cbd534930154921a1'}  -- v2.10.0
     use {'gentoo/gentoo-syntax', commit = '1b3a81ec62e5c843245dc431be0fe072add7eca8'}
     use {'ibhagwan/fzf-lua', commit = 'fea9eedc6894c44d44cbb772a5cd11c93b82d7a1'}
-    use {'github/copilot.vim', commit = 'a12fd5672110c8aa7e3c8419e28c96943ca179be'}  -- v1.59.0
+    -- use {'github/copilot.vim', commit = 'a12fd5672110c8aa7e3c8419e28c96943ca179be'}  -- v1.59.0
   end)
 end
 -- if packer not installed, define install command and bail out
@@ -189,7 +189,7 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- Copilot
-vim.keymap.set('i', '<C-K>', '<Plug>(copilot-suggest)')
-vim.g.copilot_filetypes = {
-  ['*'] = false,
-}
+-- vim.keymap.set('i', '<C-K>', '<Plug>(copilot-suggest)')
+-- vim.g.copilot_filetypes = {
+--   ['*'] = false,
+-- }
